@@ -24,83 +24,6 @@ interface NavigationItem {
     description?: string;
   }>;
 }
-// Product categories with icons and descriptions
-const productCategories: ProductCategory[] = [
-  // {
-  //   id: "our-products",
-  //   title: "Our Products",
-  //   products: [
-  //     {
-  //       id: "ocr-text-extraction",
-  //       name: "OCR Text Extraction",
-  //       description: "Extract text from images and documents.",
-  //       path: "/products/ocr",
-  //       icon: "FiCamera",
-  //     },
-  //     {
-  //       id: "ekyc",
-  //       name: "eKYC",
-  //       description: "Verify and extract information from ID card images.",
-  //       path: "/products/ekyc",
-  //       icon: "FiUserCheck",
-  //     },
-  //     {
-  //       id: "mrz-scanner",
-  //       name: "MRZ Scanner",
-  //       description: "Extract MRZ data from an uploaded image.",
-  //       path: "/products/mrz",
-  //       icon: "FiCreditCard",
-  //     },
-  //     {
-  //       id: "semantic-search",
-  //       name: "Semantic Search",
-  //       description: "Understand user intent with semantic search.",
-  //       path: "/products/semantic-search",
-  //       icon: "FiSearch",
-  //     },
-  //     {
-  //       id: "generative-ai",
-  //       name: "Generative AI",
-  //       description: "Create new content with generative models.",
-  //       path: "/products/generative-ai",
-  //       icon: "FiCpu",
-  //     },
-  //   ],
-  // },
-  // {
-  //   id: "apply-ai",
-  //   title: "Apply AI",
-  //   products: [
-  //     {
-  //       id: "data-labeling",
-  //       name: "Data Labeling",
-  //       description: "Booking Demo for Data Labeling",
-  //       path: "https://calendly.com/mrrtmob/30min",
-  //       icon: "",
-  //     },
-  //     {
-  //       id: "fine-tuning",
-  //       name: "Fine Tuning",
-  //       description: "Booking Demo for Fine-tuning",
-  //       path: "https://calendly.com/mrrtmob/30min",
-  //       icon: "",
-  //     },
-  //   ],
-  // },
-  // {
-  //   id: "ai-proxies",
-  //   title: "AI Proxies",
-  //   products: [
-  //     {
-  //       id: "ai-proxied",
-  //       name: "AI Proxies",
-  //       description: "AI Proxies",
-  //       path: "https://blizzer.chat/",
-  //       icon: "",
-  //     },
-  //   ],
-  // },
-];
 
 export const navigation: NavigationItem[] = [
   {
@@ -109,19 +32,29 @@ export const navigation: NavigationItem[] = [
     path: "/home",
   },
   {
-    id: "job_search",
-    name: "Job Search",
-    path: "/job-search",
+    id: "features",
+    name: "Features",
+    path: "/features",
   },
   {
-    id: "about",
-    name: "About",
-    path: "/about",
+    id: "how_it_works",
+    name: "How It Works",
+    path: "/how-it-works",
   },
   {
-    id: "contact",
-    name: "Contact",
-    path: "/contact",
+    id: "pricing",
+    name: "Pricing",
+    path: "/pricing",
+  },
+  {
+    id: "testimonials",
+    name: "Testimonials",
+    path: "/testimonials",
+  },
+  {
+    id: "faq",
+    name: "FAQ",
+    path: "/faq",
   },
 ];
 
