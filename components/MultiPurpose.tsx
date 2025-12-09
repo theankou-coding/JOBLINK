@@ -1,12 +1,12 @@
 // components/MultiPurpose.jsx
 export default function MultiPurpose() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-16 px-4 md:px-8">
+    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white py-16 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">
           <div className="inline-block mb-4">
-            <span className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+            <span className="text-2xl font-bold text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600">
               Multi - Purpose
             </span>
           </div>
@@ -24,7 +24,7 @@ export default function MultiPurpose() {
           {/* Business Card */}
           <div className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
             <div className="absolute top-6 right-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-linear-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                 <svg
                   className="w-6 h-6 text-white"
                   fill="none"
@@ -45,7 +45,7 @@ export default function MultiPurpose() {
               <h3 className="text-2xl font-bold text-gray-900 mb-3">
                 Businesses: Hire for Any Role
               </h3>
-              <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"></div>
+              <div className="w-16 h-1 bg-linear-to-r from-blue-500 to-blue-400 rounded-full"></div>
             </div>
 
             <p className="text-gray-600 leading-relaxed mb-6">
@@ -72,13 +72,13 @@ export default function MultiPurpose() {
             </div>
 
             {/* Background Pattern */}
-            <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-500 via-blue-400 to-blue-300 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-2 bg-linear-to-r from-blue-500 via-blue-400 to-blue-300 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
 
           {/* Job Seekers Card */}
           <div className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
             <div className="absolute top-6 right-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-linear-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
                 <svg
                   className="w-6 h-6 text-white"
                   fill="none"
@@ -99,7 +99,7 @@ export default function MultiPurpose() {
               <h3 className="text-2xl font-bold text-gray-900 mb-3">
                 Job Seekers: Find Work That Fits
               </h3>
-              <div className="w-16 h-1 bg-gradient-to-r from-green-500 to-green-400 rounded-full"></div>
+              <div className="w-16 h-1 bg-linear-to-r from-green-500 to-green-400 rounded-full"></div>
             </div>
 
             <p className="text-gray-600 leading-relaxed mb-6">
@@ -127,13 +127,13 @@ export default function MultiPurpose() {
             </div>
 
             {/* Background Pattern */}
-            <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-green-500 via-green-400 to-green-300 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-2 bg-linear-to-r from-green-500 via-green-400 to-green-300 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
 
           {/* Households Card */}
           <div className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
             <div className="absolute top-6 right-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-linear-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
                 <svg
                   className="w-6 h-6 text-white"
                   fill="none"
@@ -154,7 +154,7 @@ export default function MultiPurpose() {
               <h3 className="text-2xl font-bold text-gray-900 mb-3">
                 Households: Get Trusted Help Fast
               </h3>
-              <div className="w-16 h-1 bg-gradient-to-r from-purple-500 to-purple-400 rounded-full"></div>
+              <div className="w-16 h-1 bg-linear-to-r from-purple-500 to-purple-400 rounded-full"></div>
             </div>
 
             <p className="text-gray-600 leading-relaxed mb-6">
@@ -181,27 +181,27 @@ export default function MultiPurpose() {
             </div>
 
             {/* Background Pattern */}
-            <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-purple-500 via-purple-400 to-purple-300 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-2 bg-linear-to-r from-purple-500 via-purple-400 to-purple-300 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
         </div>
 
         {/* Stats Section */}
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 md:p-12 border border-blue-100">
+        <div className="bg-linear-to-r from-blue-50 to-purple-50 rounded-2xl p-8 md:p-12 border border-blue-100">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+              <div className="text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
                 10K+
               </div>
               <p className="text-gray-700 font-medium">Active Job Listings</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
+              <div className="text-4xl md:text-5xl font-bold bg-linear-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
                 95%
               </div>
               <p className="text-gray-700 font-medium">Success Rate</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+              <div className="text-4xl md:text-5xl font-bold bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
                 24/7
               </div>
               <p className="text-gray-700 font-medium">Platform Availability</p>
@@ -210,9 +210,9 @@ export default function MultiPurpose() {
 
           {/* CTA Button */}
           <div className="text-center mt-12">
-            <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+            <button className="group relative px-8 py-4 bg-linear-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 overflow-hidden">
               <span className="relative z-10">Join Our Community Today</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
             <p className="text-gray-500 mt-4 text-sm">
               No sign-up fees • Verified professionals • Secure platform

@@ -70,7 +70,7 @@ const JobLinkHero = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-10"
           >
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 to-purple-50 px-4 py-2 rounded-full border border-blue-100 mb-6">
+            <div className="inline-flex items-center gap-2 bg-linear-to-r from-blue-50 to-purple-50 px-4 py-2 rounded-full border border-blue-100 mb-6">
               <Sparkles className="w-4 h-4 text-blue-600" />
               <span className="text-sm font-semibold text-blue-700">
                 Trusted by 10,000+ Cambodians
@@ -80,10 +80,10 @@ const JobLinkHero = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
               Your Community Job Search,{" "}
               <span className="relative">
-                <span className="relative z-10 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <span className="relative z-10 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   Simplified.
                 </span>
-                <span className="absolute -bottom-2 left-0 w-full h-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full"></span>
+                <span className="absolute -bottom-2 left-0 w-full h-3 bg-linear-to-r from-blue-500/20 to-purple-500/20 rounded-full"></span>
               </span>
             </h1>
 
@@ -112,7 +112,7 @@ const JobLinkHero = () => {
                 key={index}
                 className="bg-white/50 backdrop-blur-sm p-4 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all duration-300"
               >
-                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {stat.value}
                 </div>
                 <div className="text-sm text-gray-600 mt-1">{stat.label}</div>
@@ -134,13 +134,13 @@ const JobLinkHero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 * index }}
                 whileHover={{ y: -5 }}
-                className="group bg-gradient-to-br from-white to-gray-50/50 p-6 rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+                className="group bg-linear-to-br from-white to-gray-50/50 p-6 rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 relative overflow-hidden"
               >
                 {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                <div className="absolute inset-0 bg-linear-to-r from-blue-500/0 via-blue-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
 
                 {/* Icon */}
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-12 h-12 bg-linear-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <div className="text-white">{feature.icon}</div>
                 </div>
 
@@ -152,20 +152,20 @@ const JobLinkHero = () => {
                 </p>
 
                 {/* Hover indicator */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </motion.div>
             ))}
           </motion.div>
 
           {/* Divider */}
-          <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-12"></div>
+          <div className="h-px bg-linear-to-r from-transparent via-gray-200 to-transparent my-12"></div>
 
           {/* CTA Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="relative bg-gradient-to-r from-blue-600 via-blue-500 to-purple-600 rounded-3xl p-8 md:p-12 text-center overflow-hidden"
+            className="relative bg-linear-to-r from-blue-600 via-blue-500 to-purple-600 rounded-3xl p-8 md:p-12 text-center overflow-hidden"
           >
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-10">

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 export default function FeaturesSection() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [, setHoveredIndex] = useState<number | null>(null);
 
   const features = [
     {

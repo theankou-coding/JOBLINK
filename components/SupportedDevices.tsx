@@ -2,7 +2,7 @@
 
 export default function DeviceSupport() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-blue-50 to-indigo-50 p-4">
       <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 text-center">
         Supported on All Devices
       </h1>
@@ -15,10 +15,10 @@ export default function DeviceSupport() {
         <div className="relative">
           <div className="relative bg-gray-800 rounded-2xl p-4 md:p-6 shadow-2xl">
             {/* Desktop Screen */}
-            <div className="bg-gradient-to-br from-blue-100 to-gray-100 rounded-xl overflow-hidden border-4 border-gray-800">
+            <div className="bg-linear-to-br from-blue-100 to-gray-100 rounded-xl overflow-hidden border-4 border-gray-800">
               <div className="h-48 flex items-center justify-center">
                 <div className="text-center p-4">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <div className="w-16 h-16 bg-linear-to-r from-blue-600 to-blue-700 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <svg
                       className="w-8 h-8 text-white"
                       fill="currentColor"
@@ -50,7 +50,7 @@ export default function DeviceSupport() {
 
           {/* Desktop Label */}
           <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
-            <span className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-2 rounded-lg font-semibold text-lg shadow-lg">
+            <span className="bg-linear-to-r from-blue-600 to-blue-700 text-white px-6 py-2 rounded-lg font-semibold text-lg shadow-lg">
               Desktop
             </span>
           </div>
@@ -60,10 +60,10 @@ export default function DeviceSupport() {
         <div className="relative">
           <div className="relative bg-gray-800 rounded-2xl p-4 shadow-2xl">
             {/* Laptop Screen */}
-            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl overflow-hidden border-4 border-gray-800">
+            <div className="bg-linear-to-br from-purple-50 to-pink-50 rounded-xl overflow-hidden border-4 border-gray-800">
               <div className="h-48 flex items-center justify-center">
                 <div className="text-center p-4">
-                  <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <div className="w-16 h-16 bg-linear-to-r from-purple-600 to-pink-600 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <svg
                       className="w-8 h-8 text-white"
                       fill="currentColor"
@@ -95,7 +95,7 @@ export default function DeviceSupport() {
 
           {/* Laptop Label */}
           <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
-            <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg font-semibold text-lg shadow-lg">
+            <span className="bg-linear-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg font-semibold text-lg shadow-lg">
               Laptop
             </span>
           </div>
@@ -105,10 +105,10 @@ export default function DeviceSupport() {
         <div className="relative">
           <div className="relative bg-gray-900 rounded-[2.5rem] p-4 shadow-2xl border-8 border-gray-900">
             {/* Phone Screen */}
-            <div className="bg-gradient-to-b from-white to-gray-100 rounded-[2rem] overflow-hidden">
+            <div className="bg-linear-to-b from-white to-gray-100 rounded-4xl overflow-hidden">
               <div className="h-48 flex flex-col items-center justify-center p-4">
                 <div className="text-center">
-                  <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <div className="w-14 h-14 bg-linear-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <svg
                       className="w-8 h-8 text-white"
                       fill="currentColor"
@@ -133,7 +133,7 @@ export default function DeviceSupport() {
 
           {/* iOS Label */}
           <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold text-lg shadow-lg">
+            <span className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold text-lg shadow-lg">
               iOS
             </span>
           </div>
@@ -143,10 +143,10 @@ export default function DeviceSupport() {
         <div className="relative">
           <div className="relative bg-black rounded-3xl p-4 shadow-2xl border-8 border-gray-900">
             {/* Phone Screen */}
-            <div className="bg-gradient-to-b from-emerald-50 to-blue-50 rounded-2xl overflow-hidden">
+            <div className="bg-linear-to-b from-emerald-50 to-blue-50 rounded-2xl overflow-hidden">
               <div className="h-48 flex flex-col items-center justify-center p-4">
                 <div className="text-center">
-                  <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <div className="w-14 h-14 bg-linear-to-r from-green-500 to-emerald-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <svg
                       className="w-8 h-8 text-white"
                       fill="currentColor"
@@ -172,7 +172,7 @@ export default function DeviceSupport() {
 
           {/* Android Label */}
           <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
-            <span className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-2 rounded-lg font-semibold text-lg shadow-lg">
+            <span className="bg-linear-to-r from-green-600 to-emerald-600 text-white px-6 py-2 rounded-lg font-semibold text-lg shadow-lg">
               Android
             </span>
           </div>
@@ -183,7 +183,7 @@ export default function DeviceSupport() {
       <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl w-full">
         <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 bg-linear-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
               <svg
                 className="w-5 h-5 text-white"
                 fill="currentColor"
@@ -205,7 +205,7 @@ export default function DeviceSupport() {
 
         <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 bg-linear-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
               <svg
                 className="w-5 h-5 text-white"
                 fill="currentColor"
@@ -227,7 +227,7 @@ export default function DeviceSupport() {
 
         <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 bg-linear-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
               <svg
                 className="w-5 h-5 text-white"
                 fill="currentColor"
@@ -245,7 +245,7 @@ export default function DeviceSupport() {
 
         <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 bg-linear-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
               <svg
                 className="w-5 h-5 text-white"
                 fill="currentColor"
