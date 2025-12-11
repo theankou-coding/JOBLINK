@@ -3,9 +3,17 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Subscribed:", email);
+    setEmail("");
+  };
 
   return (
     <footer className="bg-linear-to-b from-gray-900 to-black text-white">
@@ -29,19 +37,27 @@ export default function Footer() {
               Connecting local talent with local opportunity across Cambodia.
             </p>
 
-            {/* Newsletter Signup */}
+            {/* Newsletter Signup - Fixed */}
             <div className="bg-gray-800/50 rounded-xl p-6 backdrop-blur-sm border border-gray-700/50">
               <h4 className="font-semibold mb-3 text-gray-200">Stay Updated</h4>
-              <div className="flex">
+              <form onSubmit={handleSubmit} className="flex">
                 <input
                   type="email"
                   placeholder="Your email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 px-4 py-3 bg-gray-900 border border-gray-700 rounded-l-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
+                  required
+                  suppressHydrationWarning
                 />
-                <button className="px-6 py-3 bg-linear-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-r-xl hover:opacity-90 transition-opacity duration-300">
+                <button
+                  type="submit"
+                  className="px-6 py-3 bg-linear-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-r-xl hover:opacity-90 transition-opacity duration-300"
+                  suppressHydrationWarning
+                >
                   Subscribe
                 </button>
-              </div>
+              </form>
               <p className="text-gray-400 text-sm mt-3">
                 Get the latest job opportunities delivered to your inbox
               </p>
@@ -166,6 +182,7 @@ export default function Footer() {
               <a
                 href="#"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-linear-to-r hover:from-blue-500 hover:to-blue-600 transition-all duration-300 group"
+                suppressHydrationWarning
               >
                 <svg
                   className="w-5 h-5 text-gray-400 group-hover:text-white"
@@ -178,6 +195,7 @@ export default function Footer() {
               <a
                 href="#"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-linear-to-r hover:from-green-400 hover:to-blue-500 transition-all duration-300 group"
+                suppressHydrationWarning
               >
                 <svg
                   className="w-5 h-5 text-gray-400 group-hover:text-white"
@@ -190,6 +208,7 @@ export default function Footer() {
               <a
                 href="#"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-linear-to-r hover:from-pink-500 hover:to-red-500 transition-all duration-300 group"
+                suppressHydrationWarning
               >
                 <svg
                   className="w-5 h-5 text-gray-400 group-hover:text-white"
@@ -202,6 +221,7 @@ export default function Footer() {
               <a
                 href="#"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-linear-to-r hover:from-blue-700 hover:to-blue-800 transition-all duration-300 group"
+                suppressHydrationWarning
               >
                 <svg
                   className="w-5 h-5 text-gray-400 group-hover:text-white"
@@ -218,6 +238,7 @@ export default function Footer() {
               <a
                 href="#"
                 className="bg-gray-800 hover:bg-gray-700 rounded-xl px-4 py-2 flex items-center transition-colors duration-300 group"
+                suppressHydrationWarning
               >
                 <div className="mr-3">
                   <svg
@@ -238,6 +259,7 @@ export default function Footer() {
               <a
                 href="#"
                 className="bg-gray-800 hover:bg-gray-700 rounded-xl px-4 py-2 flex items-center transition-colors duration-300 group"
+                suppressHydrationWarning
               >
                 <div className="mr-3">
                   <svg
@@ -294,31 +316,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-
-      {/* Floating CTA */}
-      {/* <div className="fixed bottom-4 right-4 z-50">
-        <a
-          href="#"
-          className="flex items-center justify-center w-14 h-14 bg-gradient-to-r from-green-500 to-green-600 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 group"
-        >
-          <svg
-            className="w-6 h-6 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-            />
-          </svg>
-          <span className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-xs text-white rounded-full flex items-center justify-center animate-pulse">
-            1
-          </span>
-        </a>
-      </div> */}
     </footer>
   );
 }

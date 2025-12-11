@@ -29,7 +29,7 @@ export const navigation: NavigationItem[] = [
   {
     id: "home",
     name: "Home",
-    path: "/home",
+    path: "/",
   },
   {
     id: "features",
@@ -37,9 +37,9 @@ export const navigation: NavigationItem[] = [
     path: "/features",
   },
   {
-    id: "how_it_works",
-    name: "How It Works",
-    path: "/how-it-works",
+    id: "how_it_work",
+    name: "How It Work",
+    path: "/how_it_work",
   },
   {
     id: "pricing",
@@ -48,7 +48,7 @@ export const navigation: NavigationItem[] = [
   },
   {
     id: "testimonials",
-    name: "Testimonials",
+    name: "testimonials",
     path: "/testimonials",
   },
   {

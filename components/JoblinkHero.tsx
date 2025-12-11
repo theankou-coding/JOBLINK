@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   CheckCircle,
   Sparkles,
@@ -12,6 +13,12 @@ import {
 } from "lucide-react";
 
 const JobLinkHero = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const features = [
     {
       title: "Smart Job Discovery",
@@ -51,25 +58,51 @@ const JobLinkHero = () => {
     },
   ];
 
+  const stats = [
+    { value: "10K+", label: "Active Users" },
+    { value: "2K+", label: "Jobs Posted" },
+    { value: "95%", label: "Success Rate" },
+    { value: "24/7", label: "Support" },
+  ];
+
+  const cities = [
+    "Phnom Penh",
+    "Siem Reap",
+    "Battambang",
+    "Sihanoukville",
+    "Kampong Cham",
+  ];
+
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-blue-50 p-4 md:p-8 flex items-center justify-center">
       <div className="max-w-6xl w-full bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl shadow-blue-500/10 p-6 md:p-12 relative overflow-hidden border border-gray-100/50">
-        {/* Background decorations */}
+        {/* Static background decorations */}
         <div className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-linear-to-bl from-blue-500/10 to-blue-600/10 rounded-bl-full"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-linear-to-tr from-green-500/10 to-blue-500/10 rounded-tr-full"></div>
 
-        {/* Floating elements */}
-        <div className="absolute top-10 left-10 w-24 h-24 bg-linear-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-32 h-32 bg-linear-to-r from-green-500/20 to-blue-500/20 rounded-full blur-xl animate-pulse delay-1000"></div>
+        {/* Client-only animated elements */}
+        <AnimatePresence>
+          {isMounted && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.2 }}
+                transition={{ duration: 1 }}
+                className="absolute top-10 left-10 w-24 h-24 bg-linear-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-xl"
+              />
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.2 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className="absolute bottom-10 right-10 w-32 h-32 bg-linear-to-r from-green-500/20 to-blue-500/20 rounded-full blur-xl"
+              />
+            </>
+          )}
+        </AnimatePresence>
 
         <div className="relative z-10">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-10"
-          >
+          {/* Static Header */}
+          <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 bg-linear-to-r from-blue-50 to-purple-50 px-4 py-2 rounded-full border border-blue-100 mb-6">
               <Sparkles className="w-4 h-4 text-blue-600" />
               <span className="text-sm font-semibold text-blue-700">
@@ -87,60 +120,41 @@ const JobLinkHero = () => {
               </span>
             </h1>
 
-            {/* Subtitle */}
             <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
               No more confusing websites or unreliable social media posts.
               JobLink brings trustworthy local job listings, quick-applications,
               and real-time messaging into a single, easy-to-use platform.
             </p>
-          </motion.div>
+          </div>
 
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
-          >
-            {[
-              { value: "10K+", label: "Active Users" },
-              { value: "2K+", label: "Jobs Posted" },
-              { value: "95%", label: "Success Rate" },
-              { value: "24/7", label: "Support" },
-            ].map((stat, index) => (
-              <div
+          {/* Stats - Static with client-only hover effects */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            {stats.map((stat, index) => (
+              <motion.div
                 key={index}
-                className="bg-white/50 backdrop-blur-sm p-4 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all duration-300"
+                initial={{ opacity: 1 }}
+                whileHover={isMounted ? { y: -5 } : {}}
+                className="bg-white/50 backdrop-blur-sm p-4 rounded-xl border border-gray-100"
               >
                 <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {stat.value}
                 </div>
                 <div className="text-sm text-gray-600 mt-1">{stat.label}</div>
-              </div>
+              </motion.div>
             ))}
-          </motion.div>
+          </div>
 
-          {/* Features Grid */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
-          >
+          {/* Features Grid - Static with client-only animations */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 * index }}
-                whileHover={{ y: -5 }}
-                className="group bg-linear-to-br from-white to-gray-50/50 p-6 rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+                initial={{ opacity: 1 }}
+                whileHover={isMounted ? { y: -5 } : {}}
+                className="group bg-linear-to-br from-white to-gray-50/50 p-6 rounded-2xl border border-gray-100"
               >
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-linear-to-r from-blue-500/0 via-blue-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-
                 {/* Icon */}
-                <div className="w-12 h-12 bg-linear-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-12 h-12 bg-linear-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4">
                   <div className="text-white">{feature.icon}</div>
                 </div>
 
@@ -150,28 +164,27 @@ const JobLinkHero = () => {
                 <p className="text-gray-600 leading-relaxed">
                   {feature.description}
                 </p>
-
-                {/* Hover indicator */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
 
           {/* Divider */}
           <div className="h-px bg-linear-to-r from-transparent via-gray-200 to-transparent my-12"></div>
 
           {/* CTA Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="relative bg-linear-to-r from-blue-600 via-blue-500 to-purple-600 rounded-3xl p-8 md:p-12 text-center overflow-hidden"
-          >
-            {/* Background pattern */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-              <div className="absolute bottom-0 right-0 w-40 h-40 bg-white rounded-full translate-x-1/2 translate-y-1/2"></div>
-            </div>
+          <div className="relative bg-linear-to-r from-blue-600 via-blue-500 to-purple-600 rounded-3xl p-8 md:p-12 text-center overflow-hidden">
+            <AnimatePresence>
+              {isMounted && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.1 }}
+                  className="absolute inset-0"
+                >
+                  <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+                  <div className="absolute bottom-0 right-0 w-40 h-40 bg-white rounded-full translate-x-1/2 translate-y-1/2"></div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             <div className="relative z-10">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
@@ -185,11 +198,15 @@ const JobLinkHero = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-                <button className="group px-8 py-4 bg-white text-blue-600 font-semibold rounded-xl hover:shadow-2xl hover:shadow-white/20 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                <motion.button
+                  whileHover={isMounted ? { scale: 1.05 } : {}}
+                  whileTap={isMounted ? { scale: 0.95 } : {}}
+                  className="group px-8 py-4 bg-white text-blue-600 font-semibold rounded-xl flex items-center justify-center gap-2"
+                >
                   <Users className="w-5 h-5" />
                   <span>Find a Job</span>
                   <svg
-                    className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                    className="w-4 h-4"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -201,12 +218,16 @@ const JobLinkHero = () => {
                       d="M14 5l7 7m0 0l-7 7m7-7H3"
                     />
                   </svg>
-                </button>
-                <button className="group px-8 py-4 bg-transparent border-2 border-white/40 text-white font-semibold rounded-xl hover:bg-white/10 hover:border-white transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                </motion.button>
+                <motion.button
+                  whileHover={isMounted ? { scale: 1.05 } : {}}
+                  whileTap={isMounted ? { scale: 0.95 } : {}}
+                  className="group px-8 py-4 bg-transparent border-2 border-white/40 text-white font-semibold rounded-xl flex items-center justify-center gap-2"
+                >
                   <Zap className="w-5 h-5" />
                   <span>Post a Job</span>
                   <svg
-                    className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                    className="w-4 h-4"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -218,7 +239,7 @@ const JobLinkHero = () => {
                       d="M14 5l7 7m0 0l-7 7m7-7H3"
                     />
                   </svg>
-                </button>
+                </motion.button>
               </div>
 
               <div className="flex flex-wrap justify-center gap-6 text-sm text-blue-100">
@@ -236,26 +257,15 @@ const JobLinkHero = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Trust badges */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-12 pt-8 border-t border-gray-200"
-          >
+          <div className="mt-12 pt-8 border-t border-gray-200">
             <p className="text-center text-gray-500 text-sm mb-6">
               Trusted by businesses across Cambodia
             </p>
             <div className="flex flex-wrap justify-center gap-8">
-              {[
-                "Phnom Penh",
-                "Siem Reap",
-                "Battambang",
-                "Sihanoukville",
-                "Kampong Cham",
-              ].map((city, index) => (
+              {cities.map((city, index) => (
                 <div
                   key={index}
                   className="flex items-center gap-2 text-gray-700 font-medium"
@@ -265,7 +275,7 @@ const JobLinkHero = () => {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>
