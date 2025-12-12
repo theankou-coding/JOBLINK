@@ -207,7 +207,7 @@ const Navbar = () => {
               Log in
             </Link>
             <Link
-              href="/signup"
+              href="/get_start"
               className="px-6 py-2 bg-linear-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300"
             >
               Get Started
