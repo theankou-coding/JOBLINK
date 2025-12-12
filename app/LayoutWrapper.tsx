@@ -11,14 +11,15 @@ export default function LayoutWrapper({
 }) {
   const pathname = usePathname();
 
-  // Define routes where navbar and footer should be hidden
   const hideLayoutRoutes = [
+    "/auth", 
     "/login",
     "/signup",
     "/register",
     "/forgot-password",
     "/reset-password",
     "/verify-email",
+    "/home"
   ];
 
   const shouldHideLayout = hideLayoutRoutes.some((route) =>
