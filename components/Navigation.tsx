@@ -201,13 +201,17 @@ const Navbar = () => {
           {/* DESKTOP CTA */}
           <div className="hidden lg:flex items-center space-x-3">
             <Link
-              href="/login"
+              href="/auth?form=login"
               className="px-4 py-2 bg-transparent border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition"
             >
               Log in
             </Link>
             <Link
+<<<<<<< HEAD
               href="/get_start"
+=======
+              href="/auth?form=login"
+>>>>>>> 49365d442c200ec6bfea7ee9d7f122b5d52caac6
               className="px-6 py-2 bg-linear-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300"
             >
               Get Started
@@ -330,14 +334,14 @@ const Navbar = () => {
               {/* Mobile CTA Buttons */}
               <div className="pt-6 border-t border-gray-200 space-y-3">
                 <Link
-                  href="/login"
+                  href="/auth?form=login"
                   onClick={handleMobileLinkClick}
                   className="block w-full px-4 py-3 text-center bg-gray-50 text-gray-700 font-medium rounded-lg hover:bg-gray-100 border border-gray-200"
                 >
                   Log in
                 </Link>
                 <Link
-                  href="/signup"
+                  href="/auth?form=login"
                   onClick={handleMobileLinkClick}
                   className="block w-full px-4 py-3 text-center bg-linear-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg"
                 >
