@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50 flex items-center justify-center p-4">
+    <main className="min-h-screen bg-linear-to-br from-blue-50 via-white to-cyan-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         {/* Logo & Header */}
         <div className="text-center mb-8">
@@ -101,7 +101,7 @@ export default function AdminLoginPage() {
           {error && (
             <div className="mb-6 bg-red-50 border border-red-200 rounded-xl p-4">
               <div className="flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-red-700 font-medium">
                     Authentication Error
@@ -219,7 +219,7 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full flex justify-center items-center px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:from-blue-700 hover:to-cyan-700 ${
+              className={`w-full flex justify-center items-center px-4 py-3 bg-linear-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:from-blue-700 hover:to-cyan-700 ${
                 isLoading ? "opacity-80 cursor-wait" : ""
               }`}
             >

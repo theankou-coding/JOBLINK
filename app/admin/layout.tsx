@@ -99,8 +99,8 @@ export default function AdminLayout({
                 />
               </div>
               {!isNavCollapsed && (
-                <h1 className="text-lg font-bold ml-3 text-blue-700 whitespace-nowrap">
-                  JobLink Admin
+                <h1 className="text-lg font-bold ml-3 text-blue-400 whitespace-nowrap">
+                  JobLink
                 </h1>
               )}
             </div>
@@ -205,10 +205,9 @@ export default function AdminLayout({
                     active: pathname?.includes("/admin/jobs"),
                     dropdown: true,
                     dropdownItems: [
-                      { name: "All Jobs", path: "jobs" },
-                      { name: "Add New Job", path: "jobs/new" },
-                      { name: "Job Categories", path: "jobs/categories" },
-                      { name: "Featured Jobs", path: "jobs/featured" },
+                      { name: "Add New Job", path: "new" },
+                      { name: "Job Categories", path: "categories" },
+                      { name: "Featured Jobs", path: "featured" },
                     ],
                   },
                   {
@@ -225,55 +224,6 @@ export default function AdminLayout({
                       </svg>
                     ),
                     active: pathname?.includes("/admin/candidates"),
-                  },
-                  {
-                    name: "Employers",
-                    path: "employers",
-                    icon: (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
-                      </svg>
-                    ),
-                    active: pathname?.includes("/admin/employers"),
-                  },
-                  {
-                    name: "Applications",
-                    path: "applications",
-                    icon: (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm4 14a1 1 0 100-2 1 1 0 000 2z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    ),
-                    active: pathname?.includes("/admin/applications"),
-                  },
-                  {
-                    name: "Analytics",
-                    path: "analytics",
-                    icon: (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                      </svg>
-                    ),
-                    active: pathname?.includes("/admin/analytics"),
                   },
                   {
                     name: "Settings",
@@ -295,10 +245,9 @@ export default function AdminLayout({
                     active: pathname?.includes("/admin/settings"),
                     dropdown: true,
                     dropdownItems: [
-                      { name: "General", path: "settings/general" },
-                      { name: "Users", path: "settings/users" },
-                      { name: "Email Templates", path: "settings/email" },
-                      { name: "Payment", path: "settings/payment" },
+                      { name: "General", path: "general" },
+                      { name: "Users", path: "users" },
+                      { name: "Email Templates", path: "email" },
                     ],
                   },
                 ].map((item, index) => (

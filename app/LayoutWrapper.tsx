@@ -12,19 +12,19 @@ export default function LayoutWrapper({
 }) {
   const pathname = usePathname();
 
-  // Define routes where navbar and footer should be hidden
-  const hideLayoutRoutes = [
-    "/login",
-    "/signup",
-    "/register",
-    "/forgot-password",
-    "/reset-password",
-    "/verify-email",
-  ];
+  // Check for admin routes
+  const isAdminRoute = pathname?.startsWith("/admin") || false;
 
-  const shouldHideLayout = hideLayoutRoutes.some((route) =>
-    pathname?.startsWith(route)
-  );
+  // Check for authentication-related routes
+  const isAuthRoute =
+    pathname?.startsWith("/login") ||
+    pathname?.startsWith("/signup") ||
+    pathname?.startsWith("/forgot-password") ||
+    pathname?.startsWith("/reset-password") ||
+    pathname?.startsWith("/enterprise-login") ||
+    pathname?.startsWith("/welcome") ||
+    pathname?.startsWith("/verify-email") ||
+    false;
 
   // For admin or auth routes, just render the children without navbar and footer
   if (isAdminRoute || isAuthRoute) {

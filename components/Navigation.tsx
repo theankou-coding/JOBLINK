@@ -207,11 +207,7 @@ const Navbar = () => {
               Log in
             </Link>
             <Link
-<<<<<<< HEAD
-              href="/get_start"
-=======
               href="/auth?form=login"
->>>>>>> 49365d442c200ec6bfea7ee9d7f122b5d52caac6
               className="px-6 py-2 bg-linear-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300"
             >
               Get Started

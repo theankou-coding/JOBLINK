@@ -12,24 +12,13 @@ import {
   Database,
   Shield,
   CheckCircle,
-  XCircle,
-  PauseCircle,
-  Eye,
   TrendingUp,
   AlertTriangle,
   Settings,
   Download,
-  Filter,
   Search,
-  Calendar,
-  Clock,
-  DollarSign,
-  Globe,
-  FileText,
   UserCheck,
   Building,
-  Mail,
-  Lock,
 } from "lucide-react";
 
 export default function AdminDashboardPage() {
@@ -37,12 +26,11 @@ export default function AdminDashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [selectedUsers] = useState<string[]>([]);
 
   useEffect(() => {
     // Check authentication
     const isAuthenticated = sessionStorage.getItem("adminAuthenticated");
-    const storedEmail = localStorage.getItem("adminEmail");
 
     if (!isAuthenticated) {
       router.push("/admin/login");
@@ -52,16 +40,9 @@ export default function AdminDashboardPage() {
     }
   }, [router]);
 
-  const handleLogout = () => {
-    sessionStorage.removeItem("adminAuthenticated");
-    localStorage.removeItem("adminToken");
-    localStorage.removeItem("adminEmail");
-    router.push("/admin/login");
-  };
-
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-blue-50 to-white flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600">Loading admin dashboard...</p>
@@ -205,7 +186,7 @@ export default function AdminDashboardPage() {
             className="bg-white rounded-xl border border-blue-100 p-6 shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="flex items-center justify-between mb-4">
-              <div className={`p-3 bg-gradient-to-r ${stat.color} rounded-lg`}>
+              <div className={`p-3 bg-linear-to-r ${stat.color} rounded-lg`}>
                 <div className="text-white">{stat.icon}</div>
               </div>
               <span
@@ -382,7 +363,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Platform Metrics */}
-      <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl border border-blue-100 p-6 shadow-sm">
+      <div className="bg-linear-to-r from-blue-50 to-cyan-50 rounded-xl border border-blue-100 p-6 shadow-sm">
         <h3 className="text-lg font-bold text-gray-900 mb-6">
           Platform Metrics
         </h3>
@@ -609,7 +590,7 @@ export default function AdminDashboardPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50/30 to-white">
+    <div className="min-h-screen bg-linear-to-br from-blue-50/30 to-white">
       {/* Main Content */}
       <div className="p-6">
         {/* Header */}
@@ -641,41 +622,6 @@ export default function AdminDashboardPage() {
               id: "overview",
               label: "Overview",
               icon: <BarChart3 className="w-4 h-4" />,
-            },
-            {
-              id: "users",
-              label: "User Management",
-              icon: <Users className="w-4 h-4" />,
-            },
-            {
-              id: "verification",
-              label: "Verification",
-              icon: <Shield className="w-4 h-4" />,
-            },
-            {
-              id: "moderation",
-              label: "Content Moderation",
-              icon: <MessageSquare className="w-4 h-4" />,
-            },
-            {
-              id: "analytics",
-              label: "Analytics",
-              icon: <TrendingUp className="w-4 h-4" />,
-            },
-            {
-              id: "categories",
-              label: "Categories",
-              icon: <FolderTree className="w-4 h-4" />,
-            },
-            {
-              id: "notifications",
-              label: "Notifications",
-              icon: <Bell className="w-4 h-4" />,
-            },
-            {
-              id: "database",
-              label: "Database",
-              icon: <Database className="w-4 h-4" />,
             },
           ].map((tab) => (
             <button
