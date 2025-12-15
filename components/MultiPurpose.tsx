@@ -23,7 +23,7 @@ export default function MultiPurpose() {
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           {/* Business Card */}
           <div className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
-            <div className="absolute top-6 right-6">
+            <div className="relative">
               <div className="w-12 h-12 bg-linear-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                 <svg
                   className="w-6 h-6 text-white"

@@ -1,7 +1,8 @@
+// Create a client component wrapper to handle the dynamic layout
 "use client";
 
 import { usePathname } from "next/navigation";
-import Navigation from "@/components/Navigation";
+import Navbar from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
 export default function LayoutWrapper({
@@ -11,30 +12,31 @@ export default function LayoutWrapper({
 }) {
   const pathname = usePathname();
 
-  const hideLayoutRoutes = [
-    "/auth", 
-    "/login",
-    "/signup",
-    "/register",
-    "/forgot-password",
-    "/reset-password",
-    "/verify-email",
-    "/home"
-  ];
+  // Check for admin routes
+  const isAdminRoute = pathname?.startsWith("/admin") || false;
 
-  const shouldHideLayout = hideLayoutRoutes.some((route) =>
-    pathname?.startsWith(route)
-  );
+  // Check for authentication-related routes
+  const isAuthRoute =
+    pathname?.startsWith("/login") ||
+    pathname?.startsWith("/signup") ||
+    pathname?.startsWith("/forgot-password") ||
+    pathname?.startsWith("/reset-password") ||
+    pathname?.startsWith("/enterprise-login") ||
+    pathname?.startsWith("/welcome") ||
+    pathname?.startsWith("/verify-email") ||
+    false;
 
-  if (shouldHideLayout) {
+  // For admin or auth routes, just render the children without navbar and footer
+  if (isAdminRoute || isAuthRoute) {
     return <>{children}</>;
   }
 
+  // For regular routes, include the navbar and footer
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navigation />
-      <main className="grow">{children}</main>
+    <>
+      <Navbar />
+      <main>{children}</main>
       <Footer />
-    </div>
+    </>
   );
 }
