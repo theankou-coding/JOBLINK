@@ -1,6 +1,9 @@
 "use client";
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Chrome, Github, Loader2 } from "lucide-react";
@@ -11,11 +14,14 @@ import {
   GoogleAuthProvider, 
   GithubAuthProvider 
 } from "firebase/auth";
+<<<<<<< HEAD
+=======
 =======
 import React, { useState } from "react";
 import { Mail, Lock, LogIn } from "lucide-react";
 import CustomInput from "./CustomInput";
 >>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418
 
 type LoginFormProps = {
   onSwitch?: () => void;
@@ -25,11 +31,16 @@ type LoginFormProps = {
 export default function LoginForm({ onSwitch }: LoginFormProps) {
   const router = useRouter();
 =======
+<<<<<<< HEAD
+export default function LoginForm({ onSwitch }: LoginFormProps) {
+  const router = useRouter();
+=======
 const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 >>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -38,6 +49,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
   const [error, setError] = useState("");
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418
   // Handle social login (Google/GitHub)
   const handleSocialLogin = async (providerType: "google" | "github") => {
     setLoading(true);
@@ -53,6 +67,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
       setError("Social login failed. Please try again.");
     } finally {
       setLoading(false);
+<<<<<<< HEAD
+    }
+=======
     }
 =======
     if (!email.trim() || !emailRegex.test(email)) {
@@ -65,12 +82,16 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
 >>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418
   };
 
   // Handle email/password login
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418
     setLoading(true);
     setError("");
 
@@ -82,16 +103,22 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
       setError("Invalid email or password.");
     } finally {
       setLoading(false);
+<<<<<<< HEAD
+=======
 =======
     if (validate()) {
       console.log("Logging in with:", { email, password });
       // Logic for logging in...
 >>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418
     }
   };
 
   return (
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418
     <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden font-sans">
       <div className="w-full h-full grid grid-cols-1 lg:grid-cols-2">
         {/* LEFT INFO PANEL */}
@@ -110,6 +137,79 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
               <StepItem emoji="🚀" title="Advance your career" desc="Get hired and grow with new opportunities." />
             </div>
           </div>
+<<<<<<< HEAD
+        </div>
+
+        {/* RIGHT LOGIN FORM */}
+        <div className="bg-white p-6 sm:p-10 lg:p-20 flex flex-col justify-center items-center">
+          <div className="w-full max-w-md">
+            <div className="text-center mb-8 sm:mb-10">
+              <h2 className="text-2xl sm:text-4xl font-bold text-black mb-2 sm:mb-3">Sign in to JobLink</h2>
+              <p className="text-gray-500 text-xs sm:text-sm">Enter your credentials to continue.</p>
+            </div>
+
+            {/* Social Login */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
+              <button onClick={() => handleSocialLogin("google")} className="flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-800 bg-[#EEF2FF] text-black hover:bg-[#1c1c1c] transition-all">
+                <Chrome size={18} />
+                <span className="text-xs font-medium">Google</span>
+              </button>
+              <button onClick={() => handleSocialLogin("github")} className="flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-800 bg-[#EEF2FF] text-black hover:bg-[#1c1c1c] transition-all">
+                <Github size={18} />
+                <span className="text-xs font-medium">GitHub</span>
+              </button>
+            </div>
+
+            <div className="relative flex items-center mb-8 sm:mb-10">
+              <div className="grow border-t border-gray-800"></div>
+              <span className="px-3 sm:px-4 text-gray-600 text-[10px] uppercase font-bold tracking-widest">Or</span>
+              <div className="grow border-t border-gray-800"></div>
+            </div>
+
+            {error && <p className="text-red-500 text-xs mb-4 text-center">{error}</p>}
+
+            <form onSubmit={handleEmailLogin} className="space-y-5 sm:space-y-6">
+              <div>
+                <label className="block text-xs sm:text-sm text-gray-400 mb-1.5 sm:mb-2">Email Address</label>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@email.com"
+                  className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl bg-[#EEF2FF] text-black border border-gray-800 focus:outline-none focus:border-[#4640DE] transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs sm:text-sm text-gray-400 mb-1.5 sm:mb-2">Password</label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl bg-[#EEF2FF] text-black border border-gray-800 focus:outline-none focus:border-[#4640DE] transition-all"
+                  />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600">
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              <button disabled={loading} className="w-full py-3.5 sm:py-4 bg-gradient-to-r from-[#4640DE] to-[#3730a3] text-white font-bold text-base sm:text-lg rounded-xl hover:shadow-[0_0_20px_rgba(70,64,222,0.4)] transition-all flex items-center justify-center">
+                {loading ? <Loader2 className="animate-spin" /> : "Sign in"}
+              </button>
+            </form>
+
+            <p className="mt-6 sm:mt-8 text-center text-gray-500 text-xs sm:text-sm">
+              New to JobLink? <button type="button" className="text-[#4640DE] font-bold hover:underline ml-1" onClick={() => onSwitch?.()}>Sign up</button>
+            </p>
+          </div>
+        </div>
+      </div>
+=======
         </div>
 
         {/* RIGHT LOGIN FORM */}
@@ -257,11 +357,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
         </button>
       </form>
 >>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418
     </div>
   );
 }
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418
 function StepItem({ emoji, title, desc }: { emoji: string; title: string; desc: string }) {
   return (
     <div className="group flex items-start gap-4 sm:gap-6 relative">
@@ -278,6 +382,9 @@ function StepItem({ emoji, title, desc }: { emoji: string; title: string; desc: 
     </div>
   );
 }
+<<<<<<< HEAD
+=======
 =======
 export default LoginForm;
 >>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418

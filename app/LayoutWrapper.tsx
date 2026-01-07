@@ -23,6 +23,9 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     false;
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418
   // No navbar/footer for admin or auth routes
   if (isAdminRoute || isAuthRoute) return <>{children}</>;
 
@@ -34,6 +37,11 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
         <main className="flex-1 overflow-hidden">{children}</main>
       </div>
     );
+<<<<<<< HEAD
+  }
+
+  // Default navbar/footer
+=======
   }
 
   // Default navbar/footer
@@ -49,6 +57,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
 
   console.log("✅ Rendering WITH navbar and footer");
 >>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
+>>>>>>> db4d4868c86063b8d18f4058f7e8d68a22bcc418
   return (
     <>
       <main>{children}</main>
