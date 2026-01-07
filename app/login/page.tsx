@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
+
 import {
   Eye,
   EyeOff,
@@ -22,7 +21,7 @@ import {
 } from "lucide-react";
 
 export default function LoginPage() {
-  const router = useRouter();
+  // const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -69,15 +68,6 @@ export default function LoginPage() {
       setIsLoading(false);
       return;
     }
-
-    // Simulate API call
-    setTimeout(() => {
-      console.log(isLogin ? "Logging in..." : "Signing up...", formData);
-      setIsLoading(false);
-
-      // Redirect to home page on success
-      router.push("/");
-    }, 1500);
   };
 
   const handleInputChange = (
@@ -105,22 +95,11 @@ export default function LoginPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-blue-50 flex items-center justify-center p-4">
-      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
+    <div className="relative mt-50 py-10 min-h-screen  flex items-center justify-center bg-linear-to-br from-gray-50 via-white to-blue-50 px-4">
+      <div className=" max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
         {/* Left Column - Welcome & Benefits */}
-        <div className="lg:pr-12 flex flex-col justify-center">
+        <div className=" lg:pr-12 flex flex-col justify-center">
           <div className="mb-8">
-            <Link href="/" className="inline-flex items-center gap-2 mb-10">
-              <Image
-                src="/Images/logo.png"
-                alt="JobLink Logo"
-                width={60}
-                height={60}
-                className="h-20 w-auto"
-                priority
-              />
-            </Link>
-
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               {isLogin ? "Welcome Back!" : "Join JobLink Cambodia"}
               <span className="block text-blue-600 text-3xl md:text-4xl mt-2">

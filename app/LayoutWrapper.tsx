@@ -26,17 +26,19 @@ export default function LayoutWrapper({
     pathname?.startsWith("/verify-email") ||
     false;
 
+  console.log("✅ Is auth route?", isAuthRoute);
+  console.log("✅ Is admin route?", isAdminRoute);
+
   // For admin or auth routes, just render the children without navbar and footer
   if (isAdminRoute || isAuthRoute) {
+    console.log("🚫 Rendering WITHOUT navbar and footer");
     return <>{children}</>;
   }
 
-  // For regular routes, include the navbar and footer
+  console.log("✅ Rendering WITH navbar and footer");
   return (
     <>
-      <Navbar />
       <main>{children}</main>
-      <Footer />
     </>
   );
 }
