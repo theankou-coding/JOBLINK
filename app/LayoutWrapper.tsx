@@ -1,7 +1,8 @@
+// Create a client component wrapper to handle the dynamic layout
 "use client";
 
 import { usePathname } from "next/navigation";
-import Navigation from "@/components/Navigation";
+import Navbar from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
 export default function LayoutWrapper({
@@ -10,10 +11,6 @@ export default function LayoutWrapper({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-
-  // Debug logging
-  console.log("🔍 Current pathname:", pathname);
-  console.log("📁 LayoutWrapper rendering for:", pathname);
 
   // Check for admin routes
   const isAdminRoute = pathname?.startsWith("/admin") || false;

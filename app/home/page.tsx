@@ -1,8 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, MapPin, ChevronDown, User } from "lucide-react";
-import Image from "next/image";
+import {
+  Search,
+  MapPin,
+  ChevronDown,
+  User,
+} from "lucide-react";
+
 import JobCard, { JobCardProps } from "@/components/JobCard";
 import JobDetail from "@/components/JobDetail";
 
@@ -86,13 +91,10 @@ const HomePage = () => {
       {/* NAVIGATION */}
       <header className="w-full flex justify-between items-center bg-white px-12 py-4 shadow-md z-20">
         <div className="flex items-center gap-[50px]">
-          <Image
-            src="/Images/logo.png"
-            alt="JobLink Logo"
-            width={60}
-            height={60}
-            className="h-12 w-auto"
-            priority
+          <img
+            className="w-[100px] object-cover"
+            src="/images/logo.png"
+            alt="Logo"
           />
           <nav className="flex justify-center items-center gap-[25px]">
             <span className="font-bold text-[20px] text-blue-600">Home</span>
@@ -112,7 +114,7 @@ const HomePage = () => {
         </div>
 
         <div className="w-[50px] h-[50px] flex justify-center items-center">
-          <div className="w-11 h-11 flex justify-center items-center p-0.5 rounded-full border border-[#dadada] cursor-pointer hover:bg-gray-100">
+          <div className="w-[44px] h-[44px] flex justify-center items-center p-0.5 rounded-full border border-[#dadada] cursor-pointer hover:bg-gray-100">
             <User className="w-6 h-6 text-gray-700" />
           </div>
         </div>
@@ -134,9 +136,7 @@ const HomePage = () => {
           <div className="flex items-center gap-4 grow pl-2 pr-6 border border-[#d6ddeb] rounded-lg">
             <MapPin className="w-6 h-6 text-gray-500" />
             <div className="flex justify-between items-center w-full">
-              <span className="text-[#7c8493] text-[16px]">
-                Tram Kak, Takeo
-              </span>
+              <span className="text-[#7c8493] text-[16px]">Tram Kak, Takeo</span>
               <ChevronDown className="w-4 h-4 text-gray-500" />
             </div>
           </div>
@@ -161,7 +161,7 @@ const HomePage = () => {
       </div>
 
       {/* MAIN AREA */}
-      <div className="grow flex flex-row w-full overflow-hidden">
+      <div className="flex-grow flex flex-row w-full overflow-hidden">
         {/* LEFT JOB LIST */}
         <div className="w-96 flex flex-col space-y-4 p-4 border-r border-gray-200 overflow-y-auto shrink-0 bg-gray-50">
           <h3 className="text-xl font-bold sticky top-0 bg-gray-50 pb-2 z-10">
@@ -180,7 +180,7 @@ const HomePage = () => {
         </div>
 
         {/* RIGHT JOB DETAILS */}
-        <div className="grow p-4 overflow-y-auto bg-gray-50">
+        <div className="flex-grow p-4 overflow-y-auto bg-gray-50">
           <h3 className="text-xl font-bold sticky top-0 bg-gray-50 pb-2 z-10">
             Job Details
           </h3>
