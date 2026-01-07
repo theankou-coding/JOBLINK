@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Mail, Lock, LogIn } from 'lucide-react';
-import CustomInput from './CustomInput'; 
+import React, { useState } from "react";
+import { Mail, Lock, LogIn } from "lucide-react";
+import CustomInput from "./CustomInput";
 
 type LoginFormProps = {
   onSwitch: () => void;
 };
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const validate = () => {
@@ -19,10 +19,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email.trim() || !emailRegex.test(email)) {
-      newErrors.email = 'Please enter a valid email address.';
+      newErrors.email = "Please enter a valid email address.";
     }
     if (password.length < 1) {
-      newErrors.password = 'Password is required.';
+      newErrors.password = "Password is required.";
     }
 
     setErrors(newErrors);
@@ -32,22 +32,24 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      console.log('Logging in with:', { email, password });
+      console.log("Logging in with:", { email, password });
       // Logic for logging in...
     }
   };
 
   return (
-    <div className="flex-grow flex flex-col justify-center">
-      <p className="text-gray-500 text-sm tracking-widest uppercase mb-1">Welcome back</p>
+    <div className="grow flex flex-col justify-center">
+      <p className="text-gray-500 text-sm tracking-widest uppercase mb-1">
+        Welcome back
+      </p>
       {/* Main header text is now dark */}
       <h1 className="text-4xl font-bold text-gray-900 mb-6">
         Log into your account<span className="text-blue-600">.</span>
       </h1>
       <p className="text-sm font-light text-gray-600 mb-12">
-        Need an account?{' '}
-        <button 
-          onClick={onSwitch} 
+        Need an account?{" "}
+        <button
+          onClick={onSwitch}
           type="button"
           // Link color changed to blue and dark
           className="text-blue-600 font-medium hover:underline focus:outline-none"
@@ -86,11 +88,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
           {/* Text is dark/gray */}
           <label className="flex items-center text-gray-600 space-x-2">
             {/* Checkbox styling may need adjustments in a global CSS or Tailwind config */}
-            <input type="checkbox" className="form-checkbox text-blue-600 bg-white border-gray-400 rounded focus:ring-0" />
+            <input
+              type="checkbox"
+              className="form-checkbox text-blue-600 bg-white border-gray-400 rounded focus:ring-0"
+            />
             <span>Remember me</span>
           </label>
           {/* Link is blue */}
-          <a href="#" className="text-blue-600 hover:underline text-sm font-light">
+          <a
+            href="#"
+            className="text-blue-600 hover:underline text-sm font-light"
+          >
             Forgot Password?
           </a>
         </div>
@@ -100,7 +108,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
           // Primary button color changed to blue-600
           className="w-full py-3 bg-blue-600 text-white rounded-lg text-lg font-medium hover:bg-blue-700 transition duration-200 shadow-lg shadow-blue-500/50 flex items-center justify-center space-x-2"
         >
-          <LogIn className="w-5 h-5"/>
+          <LogIn className="w-5 h-5" />
           <span>Sign In</span>
         </button>
       </form>
@@ -108,4 +116,4 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
   );
 };
 
-export default LoginForm;   
+export default LoginForm;
