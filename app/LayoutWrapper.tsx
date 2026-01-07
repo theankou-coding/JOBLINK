@@ -22,6 +22,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     pathname?.startsWith("/verify-email") ||
     false;
 
+<<<<<<< HEAD
   // No navbar/footer for admin or auth routes
   if (isAdminRoute || isAuthRoute) return <>{children}</>;
 
@@ -36,11 +37,21 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   }
 
   // Default navbar/footer
+=======
+  console.log("✅ Is auth route?", isAuthRoute);
+  console.log("✅ Is admin route?", isAdminRoute);
+
+  // For admin or auth routes, just render the children without navbar and footer
+  if (isAdminRoute || isAuthRoute) {
+    console.log("🚫 Rendering WITHOUT navbar and footer");
+    return <>{children}</>;
+  }
+
+  console.log("✅ Rendering WITH navbar and footer");
+>>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
   return (
     <>
-      <Navbar />
       <main>{children}</main>
-      <Footer />
     </>
   );
 }
