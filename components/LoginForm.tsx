@@ -1,6 +1,5 @@
 "use client";
 
-<<<<<<< HEAD
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Chrome, Github, Loader2 } from "lucide-react";
@@ -11,25 +10,13 @@ import {
   GoogleAuthProvider, 
   GithubAuthProvider 
 } from "firebase/auth";
-=======
-import React, { useState } from "react";
-import { Mail, Lock, LogIn } from "lucide-react";
-import CustomInput from "./CustomInput";
->>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
 
 type LoginFormProps = {
   onSwitch?: () => void;
 };
 
-<<<<<<< HEAD
 export default function LoginForm({ onSwitch }: LoginFormProps) {
   const router = useRouter();
-=======
-const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
->>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -37,7 +24,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-<<<<<<< HEAD
   // Handle social login (Google/GitHub)
   const handleSocialLogin = async (providerType: "google" | "github") => {
     setLoading(true);
@@ -54,23 +40,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
     } finally {
       setLoading(false);
     }
-=======
-    if (!email.trim() || !emailRegex.test(email)) {
-      newErrors.email = "Please enter a valid email address.";
-    }
-    if (password.length < 1) {
-      newErrors.password = "Password is required.";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
->>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
   };
 
   // Handle email/password login
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-<<<<<<< HEAD
     setLoading(true);
     setError("");
 
@@ -82,16 +56,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
       setError("Invalid email or password.");
     } finally {
       setLoading(false);
-=======
-    if (validate()) {
-      console.log("Logging in with:", { email, password });
-      // Logic for logging in...
->>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
     }
   };
 
   return (
-<<<<<<< HEAD
     <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden font-sans">
       <div className="w-full h-full grid grid-cols-1 lg:grid-cols-2">
         {/* LEFT INFO PANEL */}
@@ -181,87 +149,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitch }) => {
           </div>
         </div>
       </div>
-=======
-    <div className="grow flex flex-col justify-center">
-      <p className="text-gray-500 text-sm tracking-widest uppercase mb-1">
-        Welcome back
-      </p>
-      {/* Main header text is now dark */}
-      <h1 className="text-4xl font-bold text-gray-900 mb-6">
-        Log into your account<span className="text-blue-600">.</span>
-      </h1>
-      <p className="text-sm font-light text-gray-600 mb-12">
-        Need an account?{" "}
-        <button
-          onClick={onSwitch}
-          type="button"
-          // Link color changed to blue and dark
-          className="text-blue-600 font-medium hover:underline focus:outline-none"
-        >
-          Create new account
-        </button>
-      </p>
-
-      <form onSubmit={handleSubmit} className="space-y-10">
-        {/* CustomInput colors need to be handled inside CustomInput.tsx to work well with light theme. 
-            Assuming CustomInput handles light theme styles (dark text on light background). */}
-
-        <CustomInput
-          label="Email"
-          id="loginEmail"
-          type="email"
-          icon={Mail}
-          placeholder="your@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          error={errors.email}
-        />
-
-        <CustomInput
-          label="Password"
-          id="loginPassword"
-          type="password"
-          icon={Lock}
-          placeholder="********"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          error={errors.password}
-        />
-
-        <div className="flex justify-between items-center text-sm">
-          {/* Text is dark/gray */}
-          <label className="flex items-center text-gray-600 space-x-2">
-            {/* Checkbox styling may need adjustments in a global CSS or Tailwind config */}
-            <input
-              type="checkbox"
-              className="form-checkbox text-blue-600 bg-white border-gray-400 rounded focus:ring-0"
-            />
-            <span>Remember me</span>
-          </label>
-          {/* Link is blue */}
-          <a
-            href="#"
-            className="text-blue-600 hover:underline text-sm font-light"
-          >
-            Forgot Password?
-          </a>
-        </div>
-
-        <button
-          type="submit"
-          // Primary button color changed to blue-600
-          className="w-full py-3 bg-blue-600 text-white rounded-lg text-lg font-medium hover:bg-blue-700 transition duration-200 shadow-lg shadow-blue-500/50 flex items-center justify-center space-x-2"
-        >
-          <LogIn className="w-5 h-5" />
-          <span>Sign In</span>
-        </button>
-      </form>
->>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
     </div>
   );
 }
 
-<<<<<<< HEAD
 function StepItem({ emoji, title, desc }: { emoji: string; title: string; desc: string }) {
   return (
     <div className="group flex items-start gap-4 sm:gap-6 relative">
@@ -278,6 +169,3 @@ function StepItem({ emoji, title, desc }: { emoji: string; title: string; desc: 
     </div>
   );
 }
-=======
-export default LoginForm;
->>>>>>> 440f778734d4a8a67b276a97fda4b4e76efdc029
