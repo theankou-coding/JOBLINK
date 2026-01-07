@@ -19,7 +19,7 @@ export default function RootLayout({
   // This client component code needs to be in a client component
   return (
     <html lang="en">
-      <body className={inter.className + "md:px-2 px-4"}>
+      <body className={inter.className}>
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
