@@ -1,8 +1,7 @@
-// Create a client component wrapper to handle the dynamic layout
 "use client";
 
 import { usePathname } from "next/navigation";
-import Navbar from "@/components/Navigation";
+import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
 export default function LayoutWrapper({
@@ -11,6 +10,10 @@ export default function LayoutWrapper({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+
+  // Debug logging
+  console.log("🔍 Current pathname:", pathname);
+  console.log("📁 LayoutWrapper rendering for:", pathname);
 
   // Check for admin routes
   const isAdminRoute = pathname?.startsWith("/admin") || false;
@@ -26,17 +29,19 @@ export default function LayoutWrapper({
     pathname?.startsWith("/verify-email") ||
     false;
 
+  console.log("✅ Is auth route?", isAuthRoute);
+  console.log("✅ Is admin route?", isAdminRoute);
+
   // For admin or auth routes, just render the children without navbar and footer
   if (isAdminRoute || isAuthRoute) {
+    console.log("🚫 Rendering WITHOUT navbar and footer");
     return <>{children}</>;
   }
 
-  // For regular routes, include the navbar and footer
+  console.log("✅ Rendering WITH navbar and footer");
   return (
     <>
-      <Navbar />
       <main>{children}</main>
-      <Footer />
     </>
   );
 }

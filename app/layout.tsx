@@ -1,7 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import LayoutWrapper from "./LayoutWrapper";
+
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,12 +17,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Check if the current path is an admin route
   // This client component code needs to be in a client component
   return (
     <html lang="en">
       <body className={inter.className + "md:px-2 px-4"}>
-        <LayoutWrapper>{children}</LayoutWrapper>
+        <Navigation />
+        {children}
+        <Footer />
       </body>
     </html>
   );
