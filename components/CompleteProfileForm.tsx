@@ -201,7 +201,11 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
             </div>
 
             {/* CV UPLOAD */}
+<<<<<<< HEAD
+            <label className="flex flex-col border-2 border-dashed rounded-xl p-5 bg-[#EEF2FF] cursor-pointer text-center hover:border-[#4640DE] transition-all">
+=======
             <label className="border-2 border-dashed rounded-xl p-5 bg-[#EEF2FF] cursor-pointer text-center hover:border-[#4640DE] transition-all">
+>>>>>>> bb777cd0d2b59939b138c7f00f249a7bc0cb8451
               <FileText className="mx-auto mb-2 text-gray-600" />
               <p className="text-xs font-medium">{cvFile ? cvFile.name : "Upload CV (PDF)"}</p>
               <input
