@@ -207,7 +207,7 @@ const Navbar = () => {
               Log in
             </Link>
             <Link
-              href="/auth?form=login"
+              href="/auth?form=create-account"
               className="px-6 py-2 bg-linear-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300"
             >
               Get Started
@@ -337,7 +337,7 @@ const Navbar = () => {
                   Log in
                 </Link>
                 <Link
-                  href="/auth?form=login"
+                  href="/auth?form=create-account"
                   onClick={handleMobileLinkClick}
                   className="block w-full px-4 py-3 text-center bg-linear-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg"
                 >

@@ -1,6 +1,6 @@
-// app/features/layout.tsx
+// app/user_dashboard/layout.tsx
 
-export default function FeaturesLayout({
+export default function UserDashboardLayout({
   children,
 }: {
   children: React.ReactNode;

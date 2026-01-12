@@ -63,7 +63,7 @@ export default function HeroSection() {
             className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-10"
           >
             <Link
-              href="/signup"
+              href="/auth?form=create-account"
               className="group relative bg-linear-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/30 transform hover:-translate-y-1 transition-all duration-300 text-center text-lg min-w-[200px] overflow-hidden"
             >
               <span className="relative z-10">Get Started Free</span>

@@ -1,21 +1,17 @@
-// Create a client component wrapper to handle the dynamic layout
 "use client";
 
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import HomeNavbar from "@/components/HomeNavbar";
 
-export default function LayoutWrapper({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  // Check for admin routes
+  // Admin routes
   const isAdminRoute = pathname?.startsWith("/admin") || false;
 
-  // Check for authentication-related routes
+  // Auth routes
   const isAuthRoute =
     pathname?.startsWith("/login") ||
     pathname?.startsWith("/signup") ||
@@ -26,12 +22,20 @@ export default function LayoutWrapper({
     pathname?.startsWith("/verify-email") ||
     false;
 
-  // For admin or auth routes, just render the children without navbar and footer
-  if (isAdminRoute || isAuthRoute) {
-    return <>{children}</>;
+  // No navbar/footer for admin or auth routes
+  if (isAdminRoute || isAuthRoute) return <>{children}</>;
+
+  // Home page uses HomeNavbar
+  if (pathname === "/home" || pathname === "/user_dashboard" || pathname === "/") {
+    return (
+      <div className="flex flex-col h-screen">
+        <HomeNavbar />
+        <main className="flex-1 overflow-hidden">{children}</main>
+      </div>
+    );
   }
 
-  // For regular routes, include the navbar and footer
+  // Default navbar/footer
   return (
     <>
       <Navbar />
