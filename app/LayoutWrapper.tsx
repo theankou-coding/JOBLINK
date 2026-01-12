@@ -26,7 +26,11 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   if (isAdminRoute || isAuthRoute) return <>{children}</>;
 
   // Home page uses HomeNavbar
+<<<<<<< HEAD
   if (pathname === "/home" || pathname === "/user_dashboard" || pathname === "/") {
+=======
+  if (pathname === "/home" || pathname === "/user_dashboard") {
+>>>>>>> bb777cd0d2b59939b138c7f00f249a7bc0cb8451
     return (
       <div className="flex flex-col h-screen">
         <HomeNavbar />
