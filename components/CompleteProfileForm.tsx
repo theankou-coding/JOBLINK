@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 "use client";
 
 import { useState } from "react";
@@ -14,14 +15,20 @@ import {
 import CustomInput from "./CustomInput";
 import { auth, rtdb, storage } from "@/firebase/clientApp";
 import { ref as dbRef, set } from "firebase/database";
-import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 import { useRouter } from "next/navigation";
 
 type CompleteProfileFormProps = {
   onBack: () => void;
 };
 
-export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps) {
+export default function CompleteProfileForm({
+  onBack,
+}: CompleteProfileFormProps) {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -38,9 +45,11 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
     gender: "male",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { id, value } = e.target;
-    setFormData(prev => ({ ...prev, [id]: value }));
+    setFormData((prev) => ({ ...prev, [id]: value }));
     if (formError) setFormError("");
   };
 
@@ -93,21 +102,21 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
 
       // 4️⃣ Navigate to /home
       router.push("/home");
-
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setFormError(err.message || "Something went wrong.");
+      const errorMessage =
+        err instanceof Error ? err.message : "Something went wrong.";
+      setFormError(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-white overflow-y-auto">
+    <div className="fixed inset-0 z-9999 bg-white overflow-y-auto">
       <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
-
         {/* LEFT PANEL */}
-        <div className="hidden lg:flex relative bg-gradient-to-b from-[#4640DE] to-[#1e1b4b] p-20 items-center">
+        <div className="hidden lg:flex relative bg-linear-to-b from-[#4640DE] to-[#1e1b4b] p-20 items-center">
           <div className="absolute text-white/5 text-[12rem] font-bold -translate-x-10 -translate-y-10">
             JobLink
           </div>
@@ -122,7 +131,6 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
         {/* FORM PANEL */}
         <div className="p-8 sm:p-12 flex justify-center items-center">
           <form onSubmit={handleSubmit} className="w-full max-w-md space-y-6">
-
             <div className="text-center">
               <p className="text-[#4640DE] text-[10px] uppercase font-bold">
                 Step 2 of 2
@@ -138,11 +146,21 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
             )}
 
             {/* PROFILE PHOTO */}
-            <label className={`flex items-center gap-4 p-4 border rounded-xl cursor-pointer
-              ${!profileImage && formError.includes("photo") ? "border-red-500 bg-red-50" : "border-gray-300 bg-[#EEF2FF]"}`}>
+            <label
+              className={`flex items-center gap-4 p-4 border rounded-xl cursor-pointer
+              ${
+                !profileImage && formError.includes("photo")
+                  ? "border-red-500 bg-red-50"
+                  : "border-gray-300 bg-[#EEF2FF]"
+              }`}
+            >
               <div className="w-14 h-14 rounded-full border flex items-center justify-center overflow-hidden">
                 {profileImage ? (
-                  <img src={URL.createObjectURL(profileImage)} className="w-full h-full object-cover" />
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={URL.createObjectURL(profileImage)}
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <Camera className="text-gray-400" />
                 )}
@@ -157,7 +175,9 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
                 type="file"
                 accept="image/*"
                 hidden
-                onChange={(e) => e.target.files && setProfileImage(e.target.files[0])}
+                onChange={(e) =>
+                  e.target.files && setProfileImage(e.target.files[0])
+                }
               />
             </label>
 
@@ -201,13 +221,11 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
             </div>
 
             {/* CV UPLOAD */}
-<<<<<<< HEAD
             <label className="flex flex-col border-2 border-dashed rounded-xl p-5 bg-[#EEF2FF] cursor-pointer text-center hover:border-[#4640DE] transition-all">
-=======
-            <label className="border-2 border-dashed rounded-xl p-5 bg-[#EEF2FF] cursor-pointer text-center hover:border-[#4640DE] transition-all">
->>>>>>> bb777cd0d2b59939b138c7f00f249a7bc0cb8451
               <FileText className="mx-auto mb-2 text-gray-600" />
-              <p className="text-xs font-medium">{cvFile ? cvFile.name : "Upload CV (PDF)"}</p>
+              <p className="text-xs font-medium">
+                {cvFile ? cvFile.name : "Upload CV (PDF)"}
+              </p>
               <input
                 type="file"
                 accept=".pdf"
@@ -228,9 +246,13 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-[2] py-4 bg-gradient-to-r from-[#4640DE] to-[#3730a3] text-white rounded-xl font-bold flex items-center justify-center disabled:opacity-50"
+                className="flex-2 py-4 bg-gradient-to-r from-[#4640DE] to-[#3730a3] text-white rounded-xl font-bold flex items-center justify-center disabled:opacity-50"
               >
-                {loading ? <Loader2 className="animate-spin" /> : "Finish Setup"}
+                {loading ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Finish Setup"
+                )}
               </button>
             </div>
           </form>

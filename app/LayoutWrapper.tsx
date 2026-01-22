@@ -5,7 +5,12 @@ import Navbar from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import HomeNavbar from "@/components/HomeNavbar";
 
-export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
+// Typical component structure
+export default function LayoutWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
 
   // Admin routes
@@ -26,11 +31,11 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   if (isAdminRoute || isAuthRoute) return <>{children}</>;
 
   // Home page uses HomeNavbar
-<<<<<<< HEAD
-  if (pathname === "/home" || pathname === "/user_dashboard" || pathname === "/") {
-=======
-  if (pathname === "/home" || pathname === "/user_dashboard") {
->>>>>>> bb777cd0d2b59939b138c7f00f249a7bc0cb8451
+  if (
+    pathname === "/home" ||
+    pathname === "/user_dashboard" ||
+    pathname === "/"
+  ) {
     return (
       <div className="flex flex-col h-screen">
         <HomeNavbar />
@@ -39,12 +44,8 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     );
   }
 
-  // Default navbar/footer
   return (
-    <>
-      <Navbar />
-      <main>{children}</main>
-      <Footer />
-    </>
+    // Your layout JSX here
+    <>{children}</>
   );
 }

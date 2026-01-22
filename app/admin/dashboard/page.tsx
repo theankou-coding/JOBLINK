@@ -62,7 +62,7 @@ export default function AdminDashboardPage() {
       detail: "12,548 Job Seekers • 12,344 Employers",
     },
     {
-      label: "Pending Approvals",
+      label: "Total ",
       value: "1,247",
       icon: <CheckCircle className="w-5 h-5" />,
       change: "+8",
@@ -329,8 +329,8 @@ export default function AdminDashboardPage() {
                     activity.status === "success"
                       ? "bg-green-100"
                       : activity.status === "warning"
-                      ? "bg-amber-100"
-                      : "bg-blue-100"
+                        ? "bg-amber-100"
+                        : "bg-blue-100"
                   }`}
                 >
                   {activity.type === "job_post" ? (
@@ -532,8 +532,8 @@ export default function AdminDashboardPage() {
                       user.status === "active"
                         ? "bg-green-100 text-green-700"
                         : user.status === "pending"
-                        ? "bg-amber-100 text-amber-700"
-                        : "bg-red-100 text-red-700"
+                          ? "bg-amber-100 text-amber-700"
+                          : "bg-red-100 text-red-700"
                     }`}
                   >
                     {user.status}
@@ -602,16 +602,6 @@ export default function AdminDashboardPage() {
             <p className="text-gray-600">
               Manage all aspects of the JobLink platform
             </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2">
-              <Download className="w-4 h-4" />
-              Export Data
-            </button>
-            <button className="px-4 py-2 bg-white border border-blue-200 text-blue-600 rounded-lg hover:bg-blue-50 flex items-center gap-2">
-              <Settings className="w-4 h-4" />
-              Settings
-            </button>
           </div>
         </div>
 
