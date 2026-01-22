@@ -14,8 +14,6 @@ import {
   CheckCircle,
   TrendingUp,
   AlertTriangle,
-  Settings,
-  Download,
   Search,
   UserCheck,
   Building,

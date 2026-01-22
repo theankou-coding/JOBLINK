@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+
 import Image from "next/image";
 import {
   Search,
@@ -12,12 +13,10 @@ import {
   Calendar,
   Star,
   Eye,
-  Edit,
   Trash2,
   UserPlus,
   CheckCircle,
   XCircle,
-  MoreVertical,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -53,7 +52,7 @@ export default function CandidatesPage() {
       appliedDate: "2024-01-15",
       resumeUrl: "#",
       rating: 4.5,
-      avatar: "/images/avatar1.png",
+      avatar: "/Images/avatar1.png",
     },
     {
       id: 2,
@@ -68,7 +67,7 @@ export default function CandidatesPage() {
       appliedDate: "2024-01-14",
       resumeUrl: "#",
       rating: 4.2,
-      avatar: "/images/avatar2.png",
+      avatar: "/Images/avatar2.png",
     },
     {
       id: 3,
@@ -83,7 +82,7 @@ export default function CandidatesPage() {
       appliedDate: "2024-01-13",
       resumeUrl: "#",
       rating: 4.8,
-      avatar: "/images/avatar3.png",
+      avatar: "/Images/avatar3.png",
     },
     {
       id: 4,
@@ -98,7 +97,7 @@ export default function CandidatesPage() {
       appliedDate: "2024-01-12",
       resumeUrl: "#",
       rating: 3.9,
-      avatar: "/images/avatar4.png",
+      avatar: "/Images/avatar4.png",
     },
     {
       id: 5,
@@ -113,7 +112,7 @@ export default function CandidatesPage() {
       appliedDate: "2024-01-11",
       resumeUrl: "#",
       rating: 4.3,
-      avatar: "/images/avatar5.png",
+      avatar: "/Images/avatar5.png",
     },
     {
       id: 6,
@@ -128,7 +127,7 @@ export default function CandidatesPage() {
       appliedDate: "2024-01-10",
       resumeUrl: "#",
       rating: 4.7,
-      avatar: "/images/avatar6.png",
+      avatar: "Images/avatar6.png",
     },
     {
       id: 7,
@@ -143,7 +142,7 @@ export default function CandidatesPage() {
       appliedDate: "2024-01-09",
       resumeUrl: "#",
       rating: 4.4,
-      avatar: "/images/avatar7.png",
+      avatar: "/Images/avatar7.png",
     },
     {
       id: 8,
@@ -158,7 +157,7 @@ export default function CandidatesPage() {
       appliedDate: "2024-01-08",
       resumeUrl: "#",
       rating: 4.1,
-      avatar: "/images/avatar8.png",
+      avatar: "/Images/avatar8.png",
     },
   ]);
 

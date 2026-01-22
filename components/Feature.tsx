@@ -61,7 +61,7 @@ export default function FeaturesSection() {
       stats: "10+ categories",
     },
     {
-      title: "AI-Powered Job Recommendations",
+      title: "Smart Job Recommendations",
       description:
         "Get personalized job suggestions based on your skills, experience, and activity.",
       icon: (

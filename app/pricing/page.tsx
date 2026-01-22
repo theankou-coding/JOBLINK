@@ -6,195 +6,194 @@ import {
   Check,
   X,
   Zap,
-  Users,
-  Building,
-  Shield,
-  Globe,
-  Star,
-  Award,
   Target,
   TrendingUp,
-  Clock,
-  MessageSquare,
-  FileText,
-  Download,
+  Star,
   HelpCircle,
+  Sparkles,
 } from "lucide-react";
+import React from "react";
 
 const Pricing = () => {
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">(
-    "monthly"
-  );
-  const [currency, setCurrency] = useState<"usd" | "khr">("usd");
+  const [selectedPackage, setSelectedPackage] = useState<
+    "basic" | "pro" | "premium"
+  >("pro");
 
-  const plans = [
+  const featurePackages = [
     {
-      name: "Free",
-      description: "Perfect for job seekers and small businesses starting out",
-      price: {
-        monthly: { usd: 0, khr: 0 },
-        yearly: { usd: 0, khr: 0 },
-      },
+      id: "basic",
+      name: "Basic Boost",
+      tagline: "Perfect for testing",
+      price: 1,
+      featuresCount: 3,
+      savings: null,
       icon: <Zap className="w-8 h-8" />,
       color: "from-gray-400 to-gray-600",
       popular: false,
       features: [
-        { text: "Create job seeker profile", included: true },
-        { text: "Apply to 10 jobs per month", included: true },
-        { text: "Basic job search filters", included: true },
-        { text: "Community forum access", included: true },
-        { text: "Email support", included: true },
-        { text: "Advanced analytics", included: false },
-        { text: "Priority job applications", included: false },
-        { text: "Resume review", included: false },
-        { text: "Direct employer messaging", included: false },
+        { text: "3 featured posts", included: true },
+        { text: "30 days visibility", included: true },
+        { text: "Standard placement", included: true },
+        { text: "Priority in search", included: false },
+        { text: "Top of category", included: false },
+        { text: "Analytics dashboard", included: false },
+        { text: "Performance insights", included: false },
       ],
-      cta: "Get Started Free",
+      cta: "Buy Now",
       ctaColor: "bg-gray-600 hover:bg-gray-700",
     },
     {
-      name: "Pro",
-      description: "For serious job seekers and growing businesses",
-      price: {
-        monthly: { usd: 1, khr: 4000 },
-        yearly: { usd: 12, khr: 48000 },
-      },
+      id: "pro",
+      name: "Pro Package",
+      tagline: "Most popular choice",
+      price: 3,
+      featuresCount: 10,
+      savings: "Save 23%",
       icon: <Target className="w-8 h-8" />,
       color: "from-blue-500 to-cyan-500",
       popular: true,
       features: [
-        { text: "Unlimited job applications", included: true },
-        { text: "Advanced AI job matching", included: true },
-        { text: "Priority in search results", included: true },
-        { text: "Direct messaging with employers", included: true },
-        { text: "Resume/CV builder", included: true },
-        { text: "Interview preparation tools", included: true },
-        { text: "Skill assessment tests", included: true },
-        { text: "Career coaching sessions (2/month)", included: true },
-        { text: "Analytics dashboard", included: true },
+        { text: "10 featured posts", included: true },
+        { text: "45 days visibility", included: true },
+        { text: "Priority placement", included: true },
+        { text: "Top of search results", included: true },
+        { text: "Category highlights", included: true },
+        { text: "Detailed analytics", included: true },
+        { text: "Performance insights", included: true },
       ],
-      cta: "Start 14-Day Free Trial",
+      cta: "Get Pro Package",
       ctaColor:
-        "bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700",
+        "bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700",
     },
     {
-      name: "Business",
-      description: "For companies serious about hiring local talent",
-      price: {
-        monthly: { usd: 3, khr: 12000 },
-        yearly: { usd: 36, khr: 144000 },
-      },
-      icon: <Building className="w-8 h-8" />,
+      id: "premium",
+      name: "Premium Bundle",
+      tagline: "Maximum visibility",
+      price: 10,
+      featuresCount: 40,
+      savings: "Save 33%",
+      icon: <TrendingUp className="w-8 h-8" />,
       color: "from-purple-500 to-pink-500",
       popular: false,
       features: [
-        { text: "Everything in Pro", included: true },
-        { text: "Unlimited job postings", included: true },
-        { text: "Advanced candidate filtering", included: true },
-        { text: "Bulk applicant management", included: true },
-        { text: "Custom branded career page", included: true },
-        { text: "Team collaboration tools", included: true },
-        { text: "API access", included: true },
-        { text: "Dedicated account manager", included: true },
-        { text: "HRIS integration", included: true },
+        { text: "40 featured posts", included: true },
+        { text: "60 days visibility", included: true },
+        { text: "Premium placement", included: true },
+        { text: "Always on top", included: true },
+        { text: "Homepage spotlight", included: true },
+        { text: "Advanced analytics", included: true },
+        { text: "AI insights & recommendations", included: true },
+        { text: "Dedicated support", included: true },
       ],
-      cta: "Contact Sales",
+      cta: "Get Premium",
       ctaColor:
-        "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700",
+        "bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700",
     },
   ];
 
-  const featuresComparison = [
+  const featureComparison = [
     {
-      category: "Job Seeker Features",
+      category: "Visibility Features",
       items: [
         {
-          name: "Job Applications",
-          free: "10/month",
-          pro: "Unlimited",
-          business: "Unlimited",
+          name: "Featured Post Duration",
+          basic: "30 days",
+          pro: "45 days",
+          premium: "60 days",
         },
         {
-          name: "AI Job Matching",
-          free: "Basic",
-          pro: "Advanced",
-          business: "Advanced",
+          name: "Search Result Placement",
+          basic: "Standard",
+          pro: "Priority (Top 3)",
+          premium: "Premium (Always Top)",
         },
         {
-          name: "Priority Applications",
-          free: false,
+          name: "Category Highlight",
+          basic: false,
           pro: true,
-          business: true,
-        },
-        { name: "Resume Builder", free: false, pro: true, business: true },
-        {
-          name: "Interview Prep",
-          free: false,
-          pro: "Basic",
-          business: "Advanced",
+          premium: "Spotlight Position",
         },
         {
-          name: "Career Coaching",
-          free: false,
-          pro: "2 sessions",
-          business: "Unlimited",
-        },
-      ],
-    },
-    {
-      category: "Employer Features",
-      items: [
-        {
-          name: "Job Postings",
-          free: false,
-          pro: "5/month",
-          business: "Unlimited",
-        },
-        {
-          name: "Candidate Messages",
-          free: false,
-          pro: "50/month",
-          business: "Unlimited",
-        },
-        {
-          name: "Applicant Tracking",
-          free: false,
-          pro: "Basic",
-          business: "Advanced",
-        },
-        {
-          name: "Branded Career Page",
-          free: false,
+          name: "Homepage Visibility",
+          basic: false,
           pro: false,
-          business: true,
+          premium: true,
         },
-        { name: "Team Members", free: "1", pro: "3", business: "10+" },
-        { name: "API Access", free: false, pro: false, business: true },
+        {
+          name: "Mobile App Priority",
+          basic: false,
+          pro: true,
+          premium: true,
+        },
+        {
+          name: "Email Newsletter Feature",
+          basic: false,
+          pro: "Monthly",
+          premium: "Weekly",
+        },
       ],
     },
     {
-      category: "Support & Security",
+      category: "Analytics & Insights",
       items: [
-        { name: "Email Support", free: true, pro: true, business: true },
-        { name: "Phone Support", free: false, pro: false, business: true },
-        { name: "Dedicated Manager", free: false, pro: false, business: true },
-        { name: "Data Encryption", free: true, pro: true, business: true },
-        { name: "GDPR Compliance", free: true, pro: true, business: true },
-        { name: "Uptime SLA", free: "99%", pro: "99.5%", business: "99.9%" },
+        {
+          name: "Basic Analytics",
+          basic: true,
+          pro: true,
+          premium: true,
+        },
+        {
+          name: "Detailed Performance",
+          basic: false,
+          pro: true,
+          premium: true,
+        },
+        {
+          name: "AI Recommendations",
+          basic: false,
+          pro: "Basic",
+          premium: "Advanced",
+        },
+        {
+          name: "Competitor Analysis",
+          basic: false,
+          pro: false,
+          premium: true,
+        },
+        {
+          name: "Real-time Notifications",
+          basic: false,
+          pro: true,
+          premium: true,
+        },
+        {
+          name: "Export Data",
+          basic: false,
+          pro: "CSV",
+          premium: "CSV & PDF",
+        },
+      ],
+    },
+    {
+      category: "Support & Management",
+      items: [
+        { name: "Email Support", basic: true, pro: true, premium: true },
+        { name: "Priority Support", basic: false, pro: true, premium: true },
+        { name: "Dedicated Manager", basic: false, pro: false, premium: true },
+        { name: "Batch Management", basic: false, pro: true, premium: true },
+        { name: "Schedule Posts", basic: false, pro: true, premium: true },
+        { name: "Auto-renewal", basic: true, pro: true, premium: true },
       ],
     },
   ];
 
-  const savings = billingCycle === "yearly" ? "Save 16%" : "";
-
-  const formatPrice = (price: number, currency: "usd" | "khr") => {
-    if (currency === "usd") {
-      return `$${price.toFixed(2)}`;
-    }
-    return `${price.toLocaleString()}៛`;
+  const formatPrice = (price: number) => {
+    return `$${price.toFixed(0)}`;
   };
 
-  const currencySymbol = currency === "usd" ? "$" : "៛";
+  const calculateValue = (price: number, count: number) => {
+    return (count / price).toFixed(1);
+  };
 
   return (
     <section className="py-20 mt-10 md:py-28 bg-linear-to-b from-white to-gray-50">
@@ -205,10 +204,10 @@ const Pricing = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold mb-6"
+            className="inline-flex items-center gap-2 bg-linear-to-r from-blue-50 to-cyan-50 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold mb-6"
           >
-            <Award className="w-4 h-4" />
-            TRANSPARENT PRICING
+            <Sparkles className="w-4 h-4" />
+            BOOST YOUR VISIBILITY
           </motion.div>
 
           <motion.h2
@@ -217,9 +216,9 @@ const Pricing = () => {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
           >
-            Simple, Fair Pricing
+            Feature Your Posts & Get Noticed
             <span className="block text-3xl md:text-4xl text-blue-600 mt-2">
-              For Every Cambodian Community
+              More Visibility, Better Results
             </span>
           </motion.h2>
 
@@ -229,180 +228,298 @@ const Pricing = () => {
             viewport={{ once: true }}
             className="text-gray-600 text-lg"
           >
-            Choose the plan that works for you. All plans include core features
-            to connect job seekers with employers in Cambodia.
+            Purchase feature posts to increase visibility and engagement.
+            Perfect for jobs, listings, or announcements that need to stand out.
           </motion.p>
         </div>
 
-        {/* Currency & Billing Toggle */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-12">
-          <div className="flex items-center gap-4">
-            <span className="text-gray-600 font-medium">Currency:</span>
-            <div className="inline-flex bg-gray-100 p-1 rounded-lg">
+        {/* Package Toggle */}
+        <div className="flex justify-center mb-12">
+          <div className="inline-flex bg-gray-100 p-1 rounded-xl">
+            {featurePackages.map((pkg) => (
               <button
-                onClick={() => setCurrency("usd")}
-                className={`px-4 py-2 rounded-md font-medium transition-all ${
-                  currency === "usd"
-                    ? "bg-white text-blue-600 shadow"
+                key={pkg.id}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onClick={() => setSelectedPackage(pkg.id as any)}
+                className={`px-6 py-3 rounded-lg font-medium transition-all flex items-center gap-2 ${
+                  selectedPackage === pkg.id
+                    ? "bg-white text-blue-600 shadow-lg"
                     : "text-gray-600 hover:text-gray-900"
                 }`}
               >
-                USD ($)
-              </button>
-              <button
-                onClick={() => setCurrency("khr")}
-                className={`px-4 py-2 rounded-md font-medium transition-all ${
-                  currency === "khr"
-                    ? "bg-white text-blue-600 shadow"
-                    : "text-gray-600 hover:text-gray-900"
-                }`}
-              >
-                KHR (៛)
-              </button>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <span className="text-gray-600 font-medium">Billing:</span>
-            <div className="inline-flex bg-gray-100 p-1 rounded-lg">
-              <button
-                onClick={() => setBillingCycle("monthly")}
-                className={`px-4 py-2 rounded-md font-medium transition-all ${
-                  billingCycle === "monthly"
-                    ? "bg-white text-blue-600 shadow"
-                    : "text-gray-600 hover:text-gray-900"
-                }`}
-              >
-                Monthly
-              </button>
-              <button
-                onClick={() => setBillingCycle("yearly")}
-                className={`px-4 py-2 rounded-md font-medium transition-all ${
-                  billingCycle === "yearly"
-                    ? "bg-white text-blue-600 shadow"
-                    : "text-gray-600 hover:text-gray-900"
-                }`}
-              >
-                Yearly{" "}
-                {savings && (
-                  <span className="ml-1 text-sm text-green-600">
-                    ({savings})
-                  </span>
+                {pkg.name}
+                {pkg.popular && (
+                  <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
                 )}
               </button>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-          {plans.map((plan, index) => (
-            <motion.div
-              key={plan.name}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className={`relative rounded-2xl border-2 ${
-                plan.popular
-                  ? "border-blue-500 shadow-2xl transform md:-translate-y-4"
-                  : "border-gray-200 shadow-lg"
-              } bg-white overflow-hidden`}
-            >
-              {plan.popular && (
-                <div className="absolute top-0 mt-5 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="bg-linear-to-r from-blue-600 to-cyan-600 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
-                    MOST POPULAR
-                  </div>
-                </div>
-              )}
-
-              <div className="p-8">
-                {/* Plan Header */}
-                <div className="flex items-center justify-between mb-6">
-                  <div
-                    className={`w-14 h-14 rounded-xl bg-linear-to-r ${plan.color} flex items-center justify-center`}
-                  >
-                    <div className="text-white">{plan.icon}</div>
-                  </div>
-                  {plan.popular && (
-                    <div className="flex items-center">
-                      <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                      <span className="ml-1 text-sm font-medium text-gray-600">
-                        4.8/5
-                      </span>
+        {/* Main Pricing Card */}
+        <div className="max-w-4xl mx-auto mb-20">
+          {featurePackages
+            .filter((pkg) => pkg.id === selectedPackage)
+            .map((pkg) => (
+              <motion.div
+                key={pkg.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="relative"
+              >
+                {/* Most Popular Tag - Positioned above the rectangle */}
+                {pkg.popular && (
+                  <div className="flex justify-center mb-4">
+                    <div className="bg-linear-to-r from-blue-600 to-cyan-600 text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-lg">
+                      MOST POPULAR
                     </div>
-                  )}
+                  </div>
+                )}
+
+                <div
+                  className={`relative rounded-3xl border-2 ${
+                    pkg.popular
+                      ? "border-blue-500 shadow-2xl"
+                      : "border-gray-200 shadow-xl"
+                  } bg-white overflow-hidden`}
+                >
+                  <div className="p-8 md:p-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                      {/* Left Column - Package Info */}
+                      <div className="lg:col-span-2">
+                        <div className="flex items-start justify-between mb-8">
+                          <div>
+                            <div className="flex items-center gap-4 mb-4">
+                              <div
+                                className={`w-16 h-16 rounded-2xl bg-linear-to-r ${pkg.color} flex items-center justify-center`}
+                              >
+                                <div className="text-white">{pkg.icon}</div>
+                              </div>
+                              <div>
+                                <h3 className="text-3xl font-bold text-gray-900">
+                                  {pkg.name}
+                                </h3>
+                                <p className="text-gray-600">{pkg.tagline}</p>
+                              </div>
+                            </div>
+                          </div>
+                          {pkg.savings && (
+                            <div className="bg-green-50 text-green-700 px-4 py-2 rounded-lg font-semibold">
+                              {pkg.savings}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Value Proposition */}
+                        <div className="bg-linear-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 mb-8">
+                          <div className="flex flex-wrap items-center justify-between gap-4">
+                            <div className="text-center">
+                              <div className="text-5xl font-bold text-gray-900">
+                                {pkg.featuresCount}
+                              </div>
+                              <div className="text-gray-600">
+                                Featured Posts
+                              </div>
+                            </div>
+                            <div className="text-3xl text-gray-300">×</div>
+                            <div className="text-center">
+                              <div className="text-2xl font-bold text-blue-600">
+                                {calculateValue(pkg.price, pkg.featuresCount)}
+                              </div>
+                              <div className="text-gray-600">Posts per $1</div>
+                            </div>
+                            <div className="text-3xl text-gray-300">=</div>
+                            <div className="text-center">
+                              <div className="text-4xl font-bold text-gray-900">
+                                {formatPrice(pkg.price)}
+                              </div>
+                              <div className="text-gray-600">Total Price</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Features List */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          {pkg.features.map((feature, idx) => (
+                            <div key={idx} className="flex items-start">
+                              {feature.included ? (
+                                <Check className="w-6 h-6 text-green-500 mr-3 shrink-0 mt-0.5" />
+                              ) : (
+                                <X className="w-6 h-6 text-gray-300 mr-3 shrink-0 mt-0.5" />
+                              )}
+                              <span
+                                className={
+                                  feature.included
+                                    ? "text-gray-800 font-medium"
+                                    : "text-gray-400"
+                                }
+                              >
+                                {feature.text}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Right Column - Purchase Box */}
+                      <div className="lg:col-span-1">
+                        <div className="bg-gray-50 rounded-2xl p-6 sticky top-8">
+                          <div className="text-center mb-8">
+                            <div className="text-5xl font-bold text-gray-900 mb-2">
+                              {formatPrice(pkg.price)}
+                            </div>
+                            <div className="text-gray-600">
+                              for {pkg.featuresCount} featured posts
+                            </div>
+                          </div>
+
+                          <div className="space-y-4 mb-8">
+                            <div className="flex justify-between items-center">
+                              <span className="text-gray-600">
+                                Posts included:
+                              </span>
+                              <span className="font-semibold">
+                                {pkg.featuresCount}
+                              </span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-gray-600">
+                                Value per post:
+                              </span>
+                              <span className="font-semibold">
+                                ${(pkg.price / pkg.featuresCount).toFixed(2)}
+                              </span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-gray-600">
+                                Visibility period:
+                              </span>
+                              <span className="font-semibold">
+                                {pkg.features
+                                  .find((f) => f.text.includes("days"))
+                                  ?.text.match(/\d+/)?.[0] || "30"}{" "}
+                                days
+                              </span>
+                            </div>
+                          </div>
+
+                          <button
+                            className={`w-full py-4 rounded-xl text-white font-semibold text-lg transition-all duration-300 ${pkg.ctaColor} shadow-lg hover:shadow-xl mb-4`}
+                          >
+                            {pkg.cta}
+                          </button>
+
+                          <div className="text-center">
+                            <div className="flex items-center justify-center gap-2 text-sm text-gray-500 mb-2">
+                              <Check className="w-4 h-4 text-green-500" />
+                              No recurring charges
+                            </div>
+                            <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+                              <Check className="w-4 h-4 text-green-500" />
+                              Use anytime within 1 year
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </motion.div>
+            ))}
+        </div>
 
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                  {plan.name}
-                </h3>
-                <p className="text-gray-600 mb-6">{plan.description}</p>
+        {/* All Packages Grid */}
+        <div className="mb-20">
+          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
+            Compare All Packages
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featurePackages.map((pkg) => (
+              <motion.div
+                key={pkg.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="relative"
+              >
+                {/* Most Popular Tag for grid items */}
+                {pkg.popular && (
+                  <div className="flex justify-center mb-4">
+                    <div className="bg-linear-to-r from-blue-600 to-cyan-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-lg">
+                      POPULAR
+                    </div>
+                  </div>
+                )}
 
-                {/* Price */}
-                <div className="mb-8">
-                  <div className="flex items-baseline">
-                    <span className="text-4xl font-bold text-gray-900">
-                      {formatPrice(
-                        plan.price[billingCycle][currency],
-                        currency
-                      )}
-                    </span>
-                    {plan.price.monthly[currency] > 0 && (
-                      <span className="text-gray-500 ml-2">
-                        /{billingCycle === "monthly" ? "month" : "year"}
-                      </span>
+                <div
+                  className={`relative rounded-2xl border-2 ${
+                    pkg.popular
+                      ? "border-blue-500 shadow-xl"
+                      : "border-gray-200 shadow-lg"
+                  } bg-white p-6`}
+                >
+                  <div className="text-center mb-6">
+                    <div
+                      className={`w-12 h-12 rounded-xl bg-linear-to-r ${pkg.color} flex items-center justify-center mx-auto mb-4`}
+                    >
+                      <div className="text-white">{pkg.icon}</div>
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-900">
+                      {pkg.name}
+                    </h4>
+                    <p className="text-gray-600 text-sm">{pkg.tagline}</p>
+                  </div>
+
+                  <div className="text-center mb-6">
+                    <div className="text-4xl font-bold text-gray-900 mb-2">
+                      {formatPrice(pkg.price)}
+                    </div>
+                    <div className="text-gray-600">
+                      {pkg.featuresCount} featured posts
+                    </div>
+                    {pkg.savings && (
+                      <div className="text-green-600 text-sm mt-2 font-medium">
+                        {pkg.savings}
+                      </div>
                     )}
                   </div>
-                  {plan.price.monthly[currency] > 0 &&
-                    billingCycle === "yearly" && (
-                      <p className="text-green-600 text-sm mt-2">
-                        Save {currencySymbol}
-                        {(
-                          plan.price.monthly[currency] * 12 -
-                          plan.price.yearly[currency]
-                        ).toLocaleString()}
-                        annually
-                      </p>
-                    )}
+
+                  <ul className="space-y-3 mb-6">
+                    {pkg.features.slice(0, 4).map((feature, idx) => (
+                      <li key={idx} className="flex items-center">
+                        {feature.included ? (
+                          <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
+                        ) : (
+                          <X className="w-4 h-4 text-gray-300 mr-2 shrink-0" />
+                        )}
+                        <span className="text-sm text-gray-700">
+                          {feature.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    onClick={() => setSelectedPackage(pkg.id as any)}
+                    className={`w-full py-3 rounded-lg font-semibold transition-all ${
+                      pkg.id === selectedPackage
+                        ? pkg.ctaColor + " text-white"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}
+                  >
+                    {pkg.id === selectedPackage ? "Selected" : "Select Package"}
+                  </button>
                 </div>
-
-                {/* Features List */}
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start">
-                      {feature.included ? (
-                        <Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
-                      ) : (
-                        <X className="w-5 h-5 text-gray-300 mr-3 flex-shrink-0 mt-0.5" />
-                      )}
-                      <span
-                        className={
-                          feature.included ? "text-gray-700" : "text-gray-400"
-                        }
-                      >
-                        {feature.text}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA Button */}
-                <button
-                  className={`w-full py-3 rounded-xl text-white font-semibold transition-all duration-300 ${plan.ctaColor} shadow-lg hover:shadow-xl`}
-                >
-                  {plan.cta}
-                </button>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         {/* Feature Comparison Table */}
         <div className="mb-20">
           <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Compare All Features
+            Detailed Feature Comparison
           </h3>
 
           <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
@@ -410,29 +527,80 @@ const Pricing = () => {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-50">
-                    <th className="text-left py-6 px-8 font-semibold text-gray-900 min-w-[300px]">
-                      Features
+                    <th className="text-left py-6 px-8 font-semibold text-gray-900 min-w-75">
+                      Feature
                     </th>
-                    <th className="text-center py-6 px-4 font-semibold text-gray-700 min-w-[200px]">
-                      Free
+                    <th className="text-center py-6 px-4 font-semibold text-gray-700 min-w-50">
+                      Basic Boost
                     </th>
-                    <th className="text-center py-6 px-4 font-semibold text-blue-600 min-w-[200px] bg-blue-50">
-                      Pro
+                    <th className="text-center py-6 px-4 font-semibold text-blue-600 min-w-50 bg-blue-50">
+                      Pro Package
                     </th>
-                    <th className="text-center py-6 px-4 font-semibold text-purple-600 min-w-[200px]">
-                      Business
+                    <th className="text-center py-6 px-4 font-semibold text-purple-600 min-w-50">
+                      Premium Bundle
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {featuresComparison.map((category, catIdx) => (
-                    <tr key={catIdx} className="border-t border-gray-100">
-                      <td colSpan={4} className="py-4 px-8">
-                        <h4 className="font-semibold text-gray-900 text-lg">
-                          {category.category}
-                        </h4>
-                      </td>
-                    </tr>
+                  {featureComparison.map((category, catIdx) => (
+                    <React.Fragment key={catIdx}>
+                      <tr className="border-t border-gray-100">
+                        <td colSpan={4} className="py-4 px-8 bg-gray-50">
+                          <h4 className="font-semibold text-gray-900 text-lg">
+                            {category.category}
+                          </h4>
+                        </td>
+                      </tr>
+                      {category.items.map((item, itemIdx) => (
+                        <tr
+                          key={itemIdx}
+                          className="border-t border-gray-100 hover:bg-gray-50"
+                        >
+                          <td className="py-4 px-8 font-medium text-gray-900">
+                            {item.name}
+                          </td>
+                          <td className="py-4 px-4 text-center">
+                            {typeof item.basic === "boolean" ? (
+                              item.basic ? (
+                                <Check className="w-5 h-5 text-green-500 mx-auto" />
+                              ) : (
+                                <X className="w-5 h-5 text-gray-300 mx-auto" />
+                              )
+                            ) : (
+                              <span className="text-gray-700">
+                                {item.basic}
+                              </span>
+                            )}
+                          </td>
+                          <td className="py-4 px-4 text-center bg-blue-50">
+                            {typeof item.pro === "boolean" ? (
+                              item.pro ? (
+                                <Check className="w-5 h-5 text-green-500 mx-auto" />
+                              ) : (
+                                <X className="w-5 h-5 text-gray-300 mx-auto" />
+                              )
+                            ) : (
+                              <span className="text-blue-600 font-medium">
+                                {item.pro}
+                              </span>
+                            )}
+                          </td>
+                          <td className="py-4 px-4 text-center">
+                            {typeof item.premium === "boolean" ? (
+                              item.premium ? (
+                                <Check className="w-5 h-5 text-green-500 mx-auto" />
+                              ) : (
+                                <X className="w-5 h-5 text-gray-300 mx-auto" />
+                              )
+                            ) : (
+                              <span className="text-purple-600 font-medium">
+                                {item.premium}
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </React.Fragment>
                   ))}
                 </tbody>
               </table>
@@ -448,34 +616,34 @@ const Pricing = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
-                question: "Can I switch plans later?",
+                question: "How long do featured posts stay active?",
                 answer:
-                  "Yes! You can upgrade, downgrade, or cancel your plan at any time. Changes take effect immediately.",
+                  "Featured posts stay active for the duration specified in your package (30-60 days). You can refresh them anytime.",
               },
               {
-                question: "Do you offer discounts for NGOs or non-profits?",
+                question: "Can I use multiple posts at once?",
                 answer:
-                  "Yes! We offer special pricing for registered NGOs and non-profit organizations in Cambodia. Contact our sales team.",
+                  "Yes! You can feature multiple posts simultaneously or schedule them for future dates.",
               },
               {
-                question: "Is there a free trial?",
+                question: "What happens if I don't use all my featured posts?",
                 answer:
-                  "Yes! All paid plans come with a 14-day free trial. No credit card required to start.",
+                  "Unused featured posts remain in your account for 1 year from purchase date.",
               },
               {
-                question: "What payment methods do you accept?",
+                question: "Can I upgrade my package later?",
                 answer:
-                  "We accept Visa, MasterCard, PayPal, ABA Bank, and other local payment methods in Cambodia.",
+                  "Absolutely! You can upgrade anytime. We'll prorate the difference based on unused posts.",
               },
               {
-                question: "Can I pay in Cambodian Riel?",
+                question: "Do featured posts work for all content types?",
                 answer:
-                  "Yes! You can pay in USD or KHR. All prices are clearly displayed in both currencies.",
+                  "Yes! Feature posts work for jobs, listings, announcements, and any other content on our platform.",
               },
               {
-                question: "Do you offer refunds?",
+                question: "Is there a money-back guarantee?",
                 answer:
-                  "We offer a 30-day money-back guarantee on annual plans. Monthly plans can be cancelled anytime.",
+                  "We offer a 7-day satisfaction guarantee on all feature post purchases.",
               },
             ].map((faq, idx) => (
               <motion.div
@@ -487,7 +655,7 @@ const Pricing = () => {
                 className="bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-200 transition-colors"
               >
                 <div className="flex items-start gap-4">
-                  <HelpCircle className="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" />
+                  <HelpCircle className="w-6 h-6 text-blue-500 shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-2">
                       {faq.question}
@@ -508,20 +676,21 @@ const Pricing = () => {
           className="bg-linear-to-r from-blue-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white text-center"
         >
           <div className="max-w-3xl mx-auto">
-            <h3 className="text-3xl font-bold mb-6">Still Have Questions?</h3>
+            <h3 className="text-3xl font-bold mb-6">Need More Posts?</h3>
             <p className="text-blue-100 text-lg mb-8">
-              Our team is here to help you choose the right plan for your needs.
+              Contact us for custom enterprise packages with unlimited featured
+              posts and premium placement options.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="px-8 py-3 bg-white text-blue-600 font-semibold rounded-xl hover:shadow-2xl transition-all duration-300">
-                Schedule a Demo
+                Get Custom Quote
               </button>
               <button className="px-8 py-3 bg-transparent border-2 border-white text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300">
-                Contact Sales
+                View Examples
               </button>
             </div>
             <p className="text-blue-100 text-sm mt-8">
-              ✨ 1,500+ businesses trust JobLink • 24/7 support • 99.9% uptime
+              ✨ 5,000+ featured posts active • 24/7 support • 99.9% uptime
             </p>
           </div>
         </motion.div>

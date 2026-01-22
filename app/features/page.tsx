@@ -27,7 +27,7 @@ export default function FeaturesSection() {
         icon: <FaSearch className="w-8 h-8" />,
         title: "Smart Job Matching",
         description:
-          "AI-powered matching that connects you with opportunities that align with your skills and career goals.",
+          "Smart job matching that connects you with opportunities that align with your skills and career goals.",
         color: "bg-blue-100 text-blue-600",
       },
       {

@@ -13,13 +13,11 @@ import {
   GithubAuthProvider,
 } from "firebase/auth";
 
-type CreateAccountFormProps = {
-  onSwitch?: () => void;
-  onSuccess: () => void; // New prop to trigger navigation
-};
+interface CreateAccountFormProps {
+  onSuccess: (userId: string) => void;
+}
 
 export default function CreateAccountForm({
-  onSwitch,
   onSuccess,
 }: CreateAccountFormProps) {
   const [showPassword, setShowPassword] = useState(false);
@@ -40,8 +38,8 @@ export default function CreateAccountForm({
         ? new GoogleAuthProvider()
         : new GithubAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
-      onSuccess(); // Navigate after social signup
+      const result = await signInWithPopup(auth, provider);
+      onSuccess(result.user.uid); // Pass the user ID
       // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     } catch (err: any) {
       setError("Social signup failed.");
@@ -65,7 +63,7 @@ export default function CreateAccountForm({
       });
 
       // SUCCESS: Trigger parent to show CompleteProfileForm
-      onSuccess();
+      onSuccess(res.user.uid);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
@@ -75,11 +73,17 @@ export default function CreateAccountForm({
     }
   };
 
+  function onSwitch(event: React.MouseEvent<HTMLButtonElement>): void {
+    0;
+    event.preventDefault();
+    // implement switch logic (e.g. toggle view or call parent handler)
+  }
+
   return (
-    <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden font-sans">
+    <div className="fixed inset-0 z-9999 bg-black flex items-center justify-center overflow-hidden font-sans">
       <div className="w-full h-full grid grid-cols-1 lg:grid-cols-2">
         {/* Left Side: Branding */}
-        <div className="relative bg-gradient-to-b from-[#4640DE] to-[#1e1b4b] p-6 sm:p-10 lg:p-20 flex flex-col justify-center overflow-hidden">
+        <div className="relative bg-linear-to-b from-[#4640DE] to-[#1e1b4b] p-6 sm:p-10 lg:p-20 flex flex-col justify-center overflow-hidden">
           <div className="absolute top-0 left-0 text-white/5 text-[10rem] sm:text-[15rem] font-bold leading-none -translate-x-12 -translate-y-12 select-none">
             JobLink
           </div>
@@ -102,7 +106,7 @@ export default function CreateAccountForm({
               Join JobLink and connect with opportunities.
             </p>
             <div className="relative space-y-8 sm:space-y-12">
-              <div className="absolute left-[13px] top-2 bottom-2 w-px bg-white/20"></div>
+              <div className="absolute left-3.25 top-2 bottom-2 w-px bg-white/20"></div>
               <StepItem
                 emoji="📝"
                 title="Create an account"
@@ -134,6 +138,7 @@ export default function CreateAccountForm({
               </p>
             </div>
 
+            {/* Social Login Buttons */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
               <button
                 onClick={() => handleSocialLogin("google")}
@@ -213,7 +218,7 @@ export default function CreateAccountForm({
               </div>
               <button
                 disabled={loading}
-                className="w-full py-4 bg-gradient-to-r from-[#4640DE] to-[#3730a3] text-white font-bold rounded-xl hover:shadow-[0_0_20px_rgba(70,64,222,0.4)] transition-all flex items-center justify-center"
+                className="w-full py-4 bg-linear-to-r from-[#4640DE] to-[#3730a3] text-white font-bold rounded-xl hover:shadow-[0_0_20px_rgba(70,64,222,0.4)] transition-all flex items-center justify-center"
               >
                 {loading ? (
                   <Loader2 className="animate-spin" />

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Camera,
   Calendar,
@@ -11,6 +11,7 @@ import {
   ChevronLeft,
   Loader2,
   AlertCircle,
+  User,
 } from "lucide-react";
 import CustomInput from "./CustomInput";
 import { auth, rtdb, storage } from "@/firebase/clientApp";
@@ -38,11 +39,12 @@ export default function CompleteProfileForm({
   const [cvFile, setCvFile] = useState<File | null>(null);
 
   const [formData, setFormData] = useState({
+    username: "", // Added username field
     phone: "",
     dob: "",
     profession: "",
     location: "",
-    gender: "male",
+    gender: "male", // Default value
   });
 
   const handleChange = (
@@ -65,17 +67,17 @@ export default function CompleteProfileForm({
       return;
     }
 
-    if (!profileImage) {
-      setFormError("Profile photo is required.");
-      setLoading(false);
-      return;
-    }
-
     try {
-      // 1️⃣ Upload profile image
-      const imageRef = storageRef(storage, `profiles/${user.uid}/avatar.jpg`);
-      await uploadBytes(imageRef, profileImage);
-      const photoURL = await getDownloadURL(imageRef);
+      // 1️⃣ Handle Profile Photo (Use manual upload OR fallback to social photo)
+      let photoURL = user.photoURL || "";
+      if (profileImage) {
+        const imageRef = storageRef(
+          storage,
+          `profiles/${user.uid}/profile.jpg`,
+        );
+        await uploadBytes(imageRef, profileImage);
+        photoURL = await getDownloadURL(imageRef);
+      }
 
       // 2️⃣ Upload CV (optional)
       let resumeURL = "";
@@ -89,6 +91,7 @@ export default function CompleteProfileForm({
       await set(dbRef(rtdb, `users/${user.uid}`), {
         uid: user.uid,
         email: user.email,
+        username: formData.username,
         phone: formData.phone,
         dob: formData.dob,
         profession: formData.profession,
@@ -123,7 +126,8 @@ export default function CompleteProfileForm({
           <div className="relative z-10 text-white max-w-md">
             <h1 className="text-4xl font-bold mb-4">Complete your profile</h1>
             <p className="text-white/80">
-              Employers prefer candidates with completed profiles.
+              Personalizing your profile helps us find the best job matches for
+              your career goals.
             </p>
           </div>
         </div>
@@ -135,12 +139,11 @@ export default function CompleteProfileForm({
               <p className="text-[#4640DE] text-[10px] uppercase font-bold">
                 Step 2 of 2
               </p>
-              <h2 className="text-3xl font-bold">Complete Profile</h2>
+              <h2 className="text-3xl font-bold">Setup Details</h2>
             </div>
 
-            {/* GLOBAL ERROR */}
             {formError && (
-              <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex gap-2 text-red-600 text-sm">
+              <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex gap-2 text-red-600 text-sm animate-shake">
                 <AlertCircle size={18} /> {formError}
               </div>
             )}
@@ -166,10 +169,12 @@ export default function CompleteProfileForm({
                 )}
               </div>
               <div>
-                <p className="font-semibold text-sm">
-                  Profile Photo <span className="text-red-500">*</span>
+                <p className="font-semibold text-sm text-gray-700">
+                  Profile Photo
                 </p>
-                <p className="text-[10px] text-gray-500">PNG / JPG</p>
+                <p className="text-[10px] text-gray-500">
+                  Click to upload new image
+                </p>
               </div>
               <input
                 type="file"
@@ -181,13 +186,24 @@ export default function CompleteProfileForm({
               />
             </label>
 
-            {/* INPUTS */}
+            {/* USERNAME (Auto-filled from Auth) */}
+            <CustomInput
+              label="Username / Full Name"
+              id="username"
+              icon={User}
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="How should we call you?"
+              required
+            />
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <CustomInput
                 label="Phone"
                 id="phone"
                 value={formData.phone}
                 onChange={handleChange}
+                placeholder="+1 234..."
                 required
               />
               <CustomInput
@@ -201,6 +217,29 @@ export default function CompleteProfileForm({
               />
             </div>
 
+            {/* GENDER SELECTION BUTTONS */}
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-gray-700">
+                Gender
+              </label>
+              <div className="flex gap-3">
+                {["male", "female", "other"].map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, gender: option })}
+                    className={`flex-1 py-2 rounded-xl border text-sm font-medium transition-all capitalize ${
+                      formData.gender === option
+                        ? "bg-[#4640DE] text-white border-[#4640DE]"
+                        : "bg-white text-gray-600 border-gray-300 hover:border-[#4640DE]"
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <CustomInput
                 label="Profession"
@@ -208,6 +247,7 @@ export default function CompleteProfileForm({
                 icon={Briefcase}
                 value={formData.profession}
                 onChange={handleChange}
+                placeholder="e.g. Designer"
                 required
               />
               <CustomInput
@@ -216,6 +256,7 @@ export default function CompleteProfileForm({
                 icon={MapPin}
                 value={formData.location}
                 onChange={handleChange}
+                placeholder="City, Country"
                 required
               />
             </div>
@@ -234,12 +275,11 @@ export default function CompleteProfileForm({
               />
             </label>
 
-            {/* BUTTONS */}
-            <div className="flex gap-3">
+            <div className="flex gap-3 pt-2">
               <button
                 type="button"
                 onClick={onBack}
-                className="flex-1 border rounded-xl py-4 font-bold flex items-center justify-center gap-2"
+                className="flex-1 border border-gray-300 rounded-xl py-4 font-bold flex items-center justify-center gap-2 hover:bg-gray-50 transition-all"
               >
                 <ChevronLeft size={16} /> Back
               </button>
