@@ -146,7 +146,7 @@ export default function JobFeedPage() {
   useEffect(() => {
     const fetchUserProfiles = async () => {
       try {
-        const profilesRef = ref(rtdb, "profiles");
+        const profilesRef = ref(rtdb, "users");
         const snapshot = await get(profilesRef);
 
         if (snapshot.exists()) {
