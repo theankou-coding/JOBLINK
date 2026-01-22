@@ -13,7 +13,7 @@ import {
 
 type CreateAccountFormProps = {
   onSwitch?: () => void;
-  onSuccess: () => void; // New prop to trigger navigation
+  onSuccess: (uid: string) => void; // Updated to pass the UID
 };
 
 export default function CreateAccountForm({ onSwitch, onSuccess }: CreateAccountFormProps) {
@@ -27,8 +27,9 @@ export default function CreateAccountForm({ onSwitch, onSuccess }: CreateAccount
     setError("");
     const provider = providerType === "google" ? new GoogleAuthProvider() : new GithubAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
-      onSuccess(); // Navigate after social signup
+      const res = await signInWithPopup(auth, provider);
+      // Trigger status check/complete profile in parent
+      onSuccess(res.user.uid); 
     } catch (err: any) {
       setError("Social signup failed.");
     } finally {
@@ -42,12 +43,14 @@ export default function CreateAccountForm({ onSwitch, onSuccess }: CreateAccount
     setError("");
     try {
       const res = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      
+      // Update display name so Step 2 can auto-fill the Username field
       await updateProfile(res.user, { 
         displayName: `${formData.firstName} ${formData.lastName}` 
       });
       
-      // SUCCESS: Trigger parent to show CompleteProfileForm
-      onSuccess();
+      // Pass UID back to trigger the next step (Complete Profile Form)
+      onSuccess(res.user.uid);
       
     } catch (err: any) {
       setError(err.message.replace("Firebase: ", ""));
@@ -71,7 +74,7 @@ export default function CreateAccountForm({ onSwitch, onSuccess }: CreateAccount
             <div className="relative space-y-8 sm:space-y-12">
               <div className="absolute left-[13px] top-2 bottom-2 w-px bg-white/20"></div>
               <StepItem emoji="📝" title="Create an account" desc="Set up your profile in minutes." />
-              <StepItem emoji="💼" title="Discover opportunities" desc="Browse jobs tailored to your skills." />
+              <StepItem emoji="💼" title="Discover opportunities" desc="Explore jobs that match your skills." />
               <StepItem emoji="🎯" title="Get hired" desc="Apply and grow your career." />
             </div>
           </div>
@@ -85,11 +88,20 @@ export default function CreateAccountForm({ onSwitch, onSuccess }: CreateAccount
               <p className="text-gray-500 text-xs sm:text-sm">Start your journey with JobLink.</p>
             </div>
 
+            {/* Social Login Buttons */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
-              <button onClick={() => handleSocialLogin("google")} className="flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-800 bg-[#EEF2FF] text-black hover:bg-[#1c1c1c] transition-all">
+              <button 
+                type="button" 
+                onClick={() => handleSocialLogin("google")} 
+                className="flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-800 bg-[#EEF2FF] text-black hover:bg-[#4640DE] hover:text-white transition-all"
+              >
                 <Chrome size={18} /> <span className="text-xs font-medium">Google</span>
               </button>
-              <button onClick={() => handleSocialLogin("github")} className="flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-800 bg-[#EEF2FF] text-black hover:bg-[#1c1c1c] transition-all">
+              <button 
+                type="button" 
+                onClick={() => handleSocialLogin("github")} 
+                className="flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-800 bg-[#EEF2FF] text-black hover:bg-[#4640DE] hover:text-white transition-all"
+              >
                 <Github size={18} /> <span className="text-xs font-medium">GitHub</span>
               </button>
             </div>
@@ -100,16 +112,20 @@ export default function CreateAccountForm({ onSwitch, onSuccess }: CreateAccount
               <div className="grow border-t border-gray-800"></div>
             </div>
 
-            {error && <p className="text-red-500 text-xs mb-4 text-center">{error}</p>}
+            {error && (
+              <p className="text-red-500 text-xs mb-4 text-center font-medium bg-red-50 py-2 rounded-lg">
+                {error}
+              </p>
+            )}
 
             <form onSubmit={handleSignUp} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input required type="text" placeholder="First name" className="w-full px-5 py-4 rounded-xl bg-[#EEF2FF] text-black border border-gray-800  focus:border-[#4640DE] outline-none transition-all"
+                <input required type="text" placeholder="First name" className="w-full px-5 py-4 rounded-xl bg-[#EEF2FF] text-black border border-gray-800 focus:border-[#4640DE] outline-none transition-all"
                   onChange={(e) => setFormData({...formData, firstName: e.target.value})} />
-                <input required type="text" placeholder="Last name" className="w-full px-5 py-4 rounded-xl bg-[#EEF2FF] text-black border border-gray-800  focus:border-[#4640DE] outline-none transition-all"
+                <input required type="text" placeholder="Last name" className="w-full px-5 py-4 rounded-xl bg-[#EEF2FF] text-black border border-gray-800 focus:border-[#4640DE] outline-none transition-all"
                   onChange={(e) => setFormData({...formData, lastName: e.target.value})} />
               </div>
-              <input required type="email" placeholder="Email address" className="w-full px-5 py-4 rounded-xl bg-[#EEF2FF] text-black border border-gray-800  focus:border-[#4640DE] outline-none transition-all"
+              <input required type="email" placeholder="Email address" className="w-full px-5 py-4 rounded-xl bg-[#EEF2FF] text-black border border-gray-800 focus:border-[#4640DE] outline-none transition-all"
                 onChange={(e) => setFormData({...formData, email: e.target.value})} />
               <div className="relative">
                 <input required type={showPassword ? "text" : "password"} placeholder="Create password" className="w-full px-5 py-4 rounded-xl bg-[#EEF2FF] text-black border border-gray-800 focus:border-[#4640DE] outline-none transition-all"
@@ -133,7 +149,6 @@ export default function CreateAccountForm({ onSwitch, onSuccess }: CreateAccount
   );
 }
 
-// StepItem component stays the same...
 function StepItem({ emoji, title, desc }: { emoji: string; title: string; desc: string }) {
   return (
     <div className="group flex items-start gap-4 sm:gap-6 relative">

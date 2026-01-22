@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Chrome, Github, Loader2 } from "lucide-react";
 import { auth } from "@/firebase/clientApp";
 import { 
@@ -13,11 +12,10 @@ import {
 
 type LoginFormProps = {
   onSwitch?: () => void;
+  onSuccess?: (uid: string) => void;
 };
 
-export default function LoginForm({ onSwitch }: LoginFormProps) {
-  const router = useRouter();
-
+export default function LoginForm({ onSwitch, onSuccess }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,9 +30,9 @@ export default function LoginForm({ onSwitch }: LoginFormProps) {
       providerType === "google" ? new GoogleAuthProvider() : new GithubAuthProvider();
 
     try {
-      await signInWithPopup(auth, provider);
-      // ✅ Redirect to home after successful login
-      router.replace("/home");
+      const result = await signInWithPopup(auth, provider);
+      // Trigger status check in parent instead of immediate redirect
+      onSuccess?.(result.user.uid);
     } catch (err: any) {
       setError("Social login failed. Please try again.");
     } finally {
@@ -49,9 +47,9 @@ export default function LoginForm({ onSwitch }: LoginFormProps) {
     setError("");
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // ✅ Redirect to home after successful login
-      router.replace("/home");
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      // Trigger status check in parent instead of immediate redirect
+      onSuccess?.(result.user.uid);
     } catch (err: any) {
       setError("Invalid email or password.");
     } finally {
@@ -90,11 +88,19 @@ export default function LoginForm({ onSwitch }: LoginFormProps) {
 
             {/* Social Login */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
-              <button onClick={() => handleSocialLogin("google")} className="flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-800 bg-[#EEF2FF] text-black hover:bg-[#1c1c1c] transition-all">
+              <button 
+                type="button"
+                onClick={() => handleSocialLogin("google")} 
+                className="flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-800 bg-[#EEF2FF] text-black hover:bg-[#4640DE] hover:text-white transition-all"
+              >
                 <Chrome size={18} />
                 <span className="text-xs font-medium">Google</span>
               </button>
-              <button onClick={() => handleSocialLogin("github")} className="flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-800 bg-[#EEF2FF] text-black hover:bg-[#1c1c1c] transition-all">
+              <button 
+                type="button"
+                onClick={() => handleSocialLogin("github")} 
+                className="flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-800 bg-[#EEF2FF] text-black hover:bg-[#4640DE] hover:text-white transition-all"
+              >
                 <Github size={18} />
                 <span className="text-xs font-medium">GitHub</span>
               </button>
@@ -106,7 +112,7 @@ export default function LoginForm({ onSwitch }: LoginFormProps) {
               <div className="grow border-t border-gray-800"></div>
             </div>
 
-            {error && <p className="text-red-500 text-xs mb-4 text-center">{error}</p>}
+            {error && <p className="text-red-500 text-xs mb-4 text-center font-medium bg-red-50 py-2 rounded-lg">{error}</p>}
 
             <form onSubmit={handleEmailLogin} className="space-y-5 sm:space-y-6">
               <div>

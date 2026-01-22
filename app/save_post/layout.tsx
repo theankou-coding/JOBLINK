@@ -1,6 +1,6 @@
-// app/auth/layout.tsx
+// app/save_post/layout.tsx
 
-export default function authLayout({
+export default function savePostLayout({
   children,
 }: {
   children: React.ReactNode;
