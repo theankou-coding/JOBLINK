@@ -794,7 +794,7 @@ const UserDashboard = () => {
 
         {/* Add Edit and Delete buttons for job detail view */}
         {jobDetailData.isDraft ? (
-          <div className="fixed bottom-6 right-6 flex gap-3 z-50">
+          <div className="fixed top-22 right-6 flex gap-3 z-50">
             <button
               onClick={() => handleEditJob(selectedJob)}
               className="px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition-colors shadow-lg flex items-center gap-2"
@@ -819,7 +819,7 @@ const UserDashboard = () => {
             </button>
           </div>
         ) : (
-          <div className="fixed bottom-6 right-6 flex gap-3 z-50">
+          <div className="fixed top-22 right-6 flex gap-3 z-50">
             <button
               onClick={() => handleEditJob(selectedJob)}
               className="px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition-colors shadow-lg flex items-center gap-2"
@@ -1086,7 +1086,7 @@ const UserDashboard = () => {
 
         {/* Loading State for Job Posts */}
         {(loadingJobs || loadingDrafts) && selectedFilter !== "draft" && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-50">
             {[1, 2].map((i) => (
               <SkeletonJobCard key={i} />
             ))}

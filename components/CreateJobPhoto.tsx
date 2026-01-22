@@ -187,12 +187,6 @@ export default function CreateJobPhotos({
                     </label>
                   )}
                 </div>
-
-                <div className="text-sm text-slate-500">
-                  <p>• First image will be the cover photo</p>
-                  <p>• Click on an image to select it</p>
-                  <p>• Maximum 5 images</p>
-                </div>
               </div>
             )}
           </div>

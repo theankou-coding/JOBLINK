@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "firebase": "^12.7.0",
-<<<<<<< HEAD
     "framer-motion": "^12.24.8",
     "lucide-react": "^0.556.0",
     "next": "^16.1.1",
@@ -31,24 +30,5 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
-=======
-    "framer-motion": "^12.23.26",
-    "lucide-react": "^0.556.0",
-    "next": "^16.1.1",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
-    "react-icons": "^5.5.0"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/firebase": "^2.4.32",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.0.1",
-    "tailwindcss": "^4",
-    "typescript": "^5"
->>>>>>> bb777cd0d2b59939b138c7f00f249a7bc0cb8451
   }
 }
