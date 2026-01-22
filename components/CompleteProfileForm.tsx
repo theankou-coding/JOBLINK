@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Camera,
   Calendar,
@@ -10,6 +10,7 @@ import {
   ChevronLeft,
   Loader2,
   AlertCircle,
+  User,
 } from "lucide-react";
 import CustomInput from "./CustomInput";
 import { auth, rtdb, storage } from "@/firebase/clientApp";
@@ -31,16 +32,25 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
   const [cvFile, setCvFile] = useState<File | null>(null);
 
   const [formData, setFormData] = useState({
+    username: "", // Added username field
     phone: "",
     dob: "",
     profession: "",
     location: "",
-    gender: "male",
+    gender: "male", // Default value
   });
+
+  // AUTO-FILL logic: Get the name from Firebase Auth if it exists (e.g., from Google/GitHub)
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user && user.displayName) {
+      setFormData((prev) => ({ ...prev, username: user.displayName || "" }));
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
-    setFormData(prev => ({ ...prev, [id]: value }));
+    setFormData((prev) => ({ ...prev, [id]: value }));
     if (formError) setFormError("");
   };
 
@@ -56,17 +66,14 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
       return;
     }
 
-    if (!profileImage) {
-      setFormError("Profile photo is required.");
-      setLoading(false);
-      return;
-    }
-
     try {
-      // 1️⃣ Upload profile image
-      const imageRef = storageRef(storage, `profiles/${user.uid}/avatar.jpg`);
-      await uploadBytes(imageRef, profileImage);
-      const photoURL = await getDownloadURL(imageRef);
+      // 1️⃣ Handle Profile Photo (Use manual upload OR fallback to social photo)
+      let photoURL = user.photoURL || ""; 
+      if (profileImage) {
+        const imageRef = storageRef(storage, `profiles/${user.uid}/profile.jpg`);
+        await uploadBytes(imageRef, profileImage);
+        photoURL = await getDownloadURL(imageRef);
+      }
 
       // 2️⃣ Upload CV (optional)
       let resumeURL = "";
@@ -80,6 +87,7 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
       await set(dbRef(rtdb, `users/${user.uid}`), {
         uid: user.uid,
         email: user.email,
+        username: formData.username,
         phone: formData.phone,
         dob: formData.dob,
         profession: formData.profession,
@@ -108,13 +116,13 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
 
         {/* LEFT PANEL */}
         <div className="hidden lg:flex relative bg-gradient-to-b from-[#4640DE] to-[#1e1b4b] p-20 items-center">
-          <div className="absolute text-white/5 text-[12rem] font-bold -translate-x-10 -translate-y-10">
+          <div className="absolute text-white/5 text-[12rem] font-bold -translate-x-10 -translate-y-10 select-none">
             JobLink
           </div>
           <div className="relative z-10 text-white max-w-md">
             <h1 className="text-4xl font-bold mb-4">Complete your profile</h1>
             <p className="text-white/80">
-              Employers prefer candidates with completed profiles.
+              Personalizing your profile helps us find the best job matches for your career goals.
             </p>
           </div>
         </div>
@@ -127,31 +135,29 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
               <p className="text-[#4640DE] text-[10px] uppercase font-bold">
                 Step 2 of 2
               </p>
-              <h2 className="text-3xl font-bold">Complete Profile</h2>
+              <h2 className="text-3xl font-bold">Setup Details</h2>
             </div>
 
-            {/* GLOBAL ERROR */}
             {formError && (
-              <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex gap-2 text-red-600 text-sm">
+              <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex gap-2 text-red-600 text-sm animate-shake">
                 <AlertCircle size={18} /> {formError}
               </div>
             )}
 
-            {/* PROFILE PHOTO */}
-            <label className={`flex items-center gap-4 p-4 border rounded-xl cursor-pointer
-              ${!profileImage && formError.includes("photo") ? "border-red-500 bg-red-50" : "border-gray-300 bg-[#EEF2FF]"}`}>
-              <div className="w-14 h-14 rounded-full border flex items-center justify-center overflow-hidden">
+            {/* PROFILE PHOTO PREVIEW */}
+            <label className="flex items-center gap-4 p-4 border border-gray-300 rounded-xl cursor-pointer bg-[#EEF2FF] hover:bg-[#e0e7ff] transition-all">
+              <div className="w-14 h-14 rounded-full border-2 border-white shadow-sm flex items-center justify-center overflow-hidden bg-white">
                 {profileImage ? (
-                  <img src={URL.createObjectURL(profileImage)} className="w-full h-full object-cover" />
+                  <img src={URL.createObjectURL(profileImage)} className="w-full h-full object-cover" alt="Preview" />
+                ) : auth.currentUser?.photoURL ? (
+                  <img src={auth.currentUser.photoURL} className="w-full h-full object-cover" alt="Social Profile" />
                 ) : (
                   <Camera className="text-gray-400" />
                 )}
               </div>
               <div>
-                <p className="font-semibold text-sm">
-                  Profile Photo <span className="text-red-500">*</span>
-                </p>
-                <p className="text-[10px] text-gray-500">PNG / JPG</p>
+                <p className="font-semibold text-sm text-gray-700">Profile Photo</p>
+                <p className="text-[10px] text-gray-500">Click to upload new image</p>
               </div>
               <input
                 type="file"
@@ -161,13 +167,24 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
               />
             </label>
 
-            {/* INPUTS */}
+            {/* USERNAME (Auto-filled from Auth) */}
+            <CustomInput
+              label="Username / Full Name"
+              id="username"
+              icon={User}
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="How should we call you?"
+              required
+            />
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <CustomInput
                 label="Phone"
                 id="phone"
                 value={formData.phone}
                 onChange={handleChange}
+                placeholder="+1 234..."
                 required
               />
               <CustomInput
@@ -181,6 +198,27 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
               />
             </div>
 
+            {/* GENDER SELECTION BUTTONS */}
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-gray-700">Gender</label>
+              <div className="flex gap-3">
+                {['male', 'female', 'other'].map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, gender: option })}
+                    className={`flex-1 py-2 rounded-xl border text-sm font-medium transition-all capitalize ${
+                      formData.gender === option 
+                      ? "bg-[#4640DE] text-white border-[#4640DE]" 
+                      : "bg-white text-gray-600 border-gray-300 hover:border-[#4640DE]"
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <CustomInput
                 label="Profession"
@@ -188,6 +226,7 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
                 icon={Briefcase}
                 value={formData.profession}
                 onChange={handleChange}
+                placeholder="e.g. Designer"
                 required
               />
               <CustomInput
@@ -196,18 +235,18 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
                 icon={MapPin}
                 value={formData.location}
                 onChange={handleChange}
+                placeholder="City, Country"
                 required
               />
             </div>
 
             {/* CV UPLOAD */}
-<<<<<<< HEAD
             <label className="flex flex-col border-2 border-dashed rounded-xl p-5 bg-[#EEF2FF] cursor-pointer text-center hover:border-[#4640DE] transition-all">
-=======
-            <label className="border-2 border-dashed rounded-xl p-5 bg-[#EEF2FF] cursor-pointer text-center hover:border-[#4640DE] transition-all">
->>>>>>> bb777cd0d2b59939b138c7f00f249a7bc0cb8451
               <FileText className="mx-auto mb-2 text-gray-600" />
-              <p className="text-xs font-medium">{cvFile ? cvFile.name : "Upload CV (PDF)"}</p>
+              <p className="text-xs font-medium text-gray-700">
+                {cvFile ? cvFile.name : "Upload Resume (Optional PDF)"}
+              </p>
+              <p className="text-[10px] text-gray-500 mt-1">Maximum size 5MB</p>
               <input
                 type="file"
                 accept=".pdf"
@@ -216,19 +255,18 @@ export default function CompleteProfileForm({ onBack }: CompleteProfileFormProps
               />
             </label>
 
-            {/* BUTTONS */}
-            <div className="flex gap-3">
+            <div className="flex gap-3 pt-2">
               <button
                 type="button"
                 onClick={onBack}
-                className="flex-1 border rounded-xl py-4 font-bold flex items-center justify-center gap-2"
+                className="flex-1 border border-gray-300 rounded-xl py-4 font-bold flex items-center justify-center gap-2 hover:bg-gray-50 transition-all"
               >
                 <ChevronLeft size={16} /> Back
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-[2] py-4 bg-gradient-to-r from-[#4640DE] to-[#3730a3] text-white rounded-xl font-bold flex items-center justify-center disabled:opacity-50"
+                className="flex-[2] py-4 bg-gradient-to-r from-[#4640DE] to-[#3730a3] text-white rounded-xl font-bold flex items-center justify-center disabled:opacity-50 shadow-lg shadow-indigo-200"
               >
                 {loading ? <Loader2 className="animate-spin" /> : "Finish Setup"}
               </button>

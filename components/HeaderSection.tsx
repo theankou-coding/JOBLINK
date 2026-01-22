@@ -64,7 +64,7 @@ export default function HeroSection() {
           >
             <Link
               href="/auth?form=create-account"
-              className="group relative bg-linear-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/30 transform hover:-translate-y-1 transition-all duration-300 text-center text-lg min-w-[200px] overflow-hidden"
+              className="group relative bg-linear-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/30 transform hover:-translate-y-1 transition-all duration-300 text-center text-lg min-w-50 overflow-hidden"
             >
               <span className="relative z-10">Get Started Free</span>
               <div className="absolute inset-0 bg-linear-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -72,7 +72,7 @@ export default function HeroSection() {
 
             <Link
               href="/demo"
-              className="group flex items-center justify-center gap-3 min-w-[200px] px-6 py-4 border border-gray-300 rounded-xl hover:border-blue-500 hover:shadow-lg transition-all duration-300"
+              className="group flex items-center justify-center gap-3 min-w-50 px-6 py-4 border border-gray-300 rounded-xl hover:border-blue-500 hover:shadow-lg transition-all duration-300"
             >
               <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-linear-to-r from-blue-50 to-purple-50 group-hover:from-blue-100 group-hover:to-purple-100 transition-all duration-300 shadow-sm">
                 <span className="text-blue-600 text-lg">▶</span>

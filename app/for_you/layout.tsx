@@ -1,6 +1,6 @@
-// app/auth/layout.tsx
+// app/for_you/layout.tsx
 
-export default function authLayout({
+export default function forYouLayout({
   children,
 }: {
   children: React.ReactNode;
