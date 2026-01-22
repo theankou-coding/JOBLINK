@@ -71,7 +71,9 @@ export default function HeroSection() {
             </Link>
 
             <Link
-              href="/demo"
+              href="https://www.youtube.com/watch?v=MfyA6SLQBKE&list=RDMfyA6SLQBKE&start_radio=1"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group flex items-center justify-center gap-3 min-w-50 px-6 py-4 border border-gray-300 rounded-xl hover:border-blue-500 hover:shadow-lg transition-all duration-300"
             >
               <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-linear-to-r from-blue-50 to-purple-50 group-hover:from-blue-100 group-hover:to-purple-100 transition-all duration-300 shadow-sm">
@@ -159,7 +161,7 @@ export default function HeroSection() {
                     <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
                     <span className="text-gray-700 font-medium">{city}</span>
                   </div>
-                )
+                ),
               )}
             </div>
           </motion.div>
@@ -257,7 +259,7 @@ export default function HeroSection() {
                               {item}
                             </span>
                           </div>
-                        )
+                        ),
                       )}
                     </div>
                   </div>

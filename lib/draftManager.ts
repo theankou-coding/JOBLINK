@@ -39,9 +39,9 @@ export interface ImageCompressionOptions {
 }
 
 export class DraftManager {
-  static DB_NAME = 'JobDraftsDB';
+  static DB_NAME = "JobDraftsDB";
   static DB_VERSION = 1;
-  static STORE_NAME = 'drafts';
+  static STORE_NAME = "drafts";
 
   static async initDB(): Promise<IDBDatabase> {
     return new Promise((resolve, reject) => {
@@ -58,21 +58,26 @@ export class DraftManager {
       request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
         const db = (event.target as IDBOpenDBRequest).result;
         if (!db.objectStoreNames.contains(this.STORE_NAME)) {
-          const store = db.createObjectStore(this.STORE_NAME, { keyPath: 'id' });
-          store.createIndex('createdAt', 'createdAt', { unique: false });
+          const store = db.createObjectStore(this.STORE_NAME, {
+            keyPath: "id",
+          });
+          store.createIndex("createdAt", "createdAt", { unique: false });
         }
       };
     });
   }
 
-  static async saveDraftLocally(jobData: JobData, images: File[]): Promise<Draft> {
+  static async saveDraftLocally(
+    jobData: JobData,
+    images: File[],
+  ): Promise<Draft> {
     try {
       const db = await this.initDB();
       const draftId = `draft_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
+
       // Convert images to base64 for local storage
       const base64Images = await Promise.all(
-        images.map(img => this.fileToBase64(img))
+        images.map((img) => this.fileToBase64(img)),
       );
 
       const draft: Draft = {
@@ -84,7 +89,7 @@ export class DraftManager {
       };
 
       return new Promise((resolve, reject) => {
-        const transaction = db.transaction([this.STORE_NAME], 'readwrite');
+        const transaction = db.transaction([this.STORE_NAME], "readwrite");
         const store = transaction.objectStore(this.STORE_NAME);
         const request = store.add(draft);
 
@@ -102,7 +107,7 @@ export class DraftManager {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
+      reader.onerror = (error) => reject(error);
     });
   }
 
@@ -110,7 +115,7 @@ export class DraftManager {
     try {
       const db = await this.initDB();
       return new Promise((resolve, reject) => {
-        const transaction = db.transaction([this.STORE_NAME], 'readonly');
+        const transaction = db.transaction([this.STORE_NAME], "readonly");
         const store = transaction.objectStore(this.STORE_NAME);
         const request = store.getAll();
 
@@ -127,7 +132,7 @@ export class DraftManager {
     try {
       const db = await this.initDB();
       return new Promise((resolve, reject) => {
-        const transaction = db.transaction([this.STORE_NAME], 'readonly');
+        const transaction = db.transaction([this.STORE_NAME], "readonly");
         const store = transaction.objectStore(this.STORE_NAME);
         const request = store.get(draftId);
 
@@ -144,7 +149,7 @@ export class DraftManager {
     try {
       const db = await this.initDB();
       return new Promise((resolve, reject) => {
-        const transaction = db.transaction([this.STORE_NAME], 'readwrite');
+        const transaction = db.transaction([this.STORE_NAME], "readwrite");
         const store = transaction.objectStore(this.STORE_NAME);
         const request = store.delete(draftId);
 
@@ -157,18 +162,25 @@ export class DraftManager {
     }
   }
 
-  static async updateDraft(draftId: string, updates: Partial<Omit<Draft, 'id'>>): Promise<Draft> {
+  static async updateDraft(
+    draftId: string,
+    updates: Partial<Omit<Draft, "id">>,
+  ): Promise<Draft> {
     try {
       const db = await this.initDB();
       return new Promise((resolve, reject) => {
-        const transaction = db.transaction([this.STORE_NAME], 'readwrite');
+        const transaction = db.transaction([this.STORE_NAME], "readwrite");
         const store = transaction.objectStore(this.STORE_NAME);
         const getRequest = store.get(draftId);
 
         getRequest.onsuccess = () => {
           const draft = getRequest.result;
           if (draft) {
-            const updatedDraft = { ...draft, ...updates, updatedAt: Date.now() };
+            const updatedDraft = {
+              ...draft,
+              ...updates,
+              updatedAt: Date.now(),
+            };
             const updateRequest = store.put(updatedDraft);
             updateRequest.onsuccess = () => resolve(updatedDraft);
             updateRequest.onerror = () => reject(updateRequest.error);
@@ -184,12 +196,15 @@ export class DraftManager {
     }
   }
 
-  static async compressImages(images: (File | string)[], quality = 0.6): Promise<string[]> {
+  static async compressImages(
+    images: (File | string)[],
+    quality = 0.6,
+  ): Promise<string[]> {
     return Promise.all(
       images.map(async (file): Promise<string> => {
         // Skip if already base64
-        if (typeof file === 'string') return file;
-        
+        if (typeof file === "string") return file;
+
         return new Promise((resolve) => {
           const reader = new FileReader();
           reader.readAsDataURL(file);
@@ -197,40 +212,42 @@ export class DraftManager {
             const img = new Image();
             img.src = event.target?.result as string;
             img.onload = () => {
-              const canvas = document.createElement('canvas');
-              const ctx = canvas.getContext('2d');
+              const canvas = document.createElement("canvas");
+              const ctx = canvas.getContext("2d");
               if (!ctx) {
-                resolve('');
+                resolve("");
                 return;
               }
-              
+
               // Calculate new dimensions (max 800px width)
               const maxWidth = 800;
               const scale = Math.min(maxWidth / img.width, 1);
               canvas.width = img.width * scale;
               canvas.height = img.height * scale;
-              
+
               ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-              const compressed = canvas.toDataURL('image/jpeg', quality);
+              const compressed = canvas.toDataURL("image/jpeg", quality);
               resolve(compressed);
             };
           };
         });
-      })
+      }),
     );
   }
 
-  static async cleanupOldDrafts(days: number = 30): Promise<{ deleted: number }> {
+  static async cleanupOldDrafts(
+    days: number = 30,
+  ): Promise<{ deleted: number }> {
     try {
       const drafts = await this.getAllDrafts();
-      const cutoff = Date.now() - (days * 24 * 60 * 60 * 1000);
-      
-      const oldDrafts = drafts.filter(draft => draft.createdAt < cutoff);
-      
+      const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
+
+      const oldDrafts = drafts.filter((draft) => draft.createdAt < cutoff);
+
       for (const draft of oldDrafts) {
         await this.deleteDraft(draft.id);
       }
-      
+
       return { deleted: oldDrafts.length };
     } catch (error) {
       console.error("Cleanup error:", error);

@@ -6,7 +6,12 @@ import Navbar from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import HomeNavbar from "@/components/HomeNavbar";
 
-export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
+// Typical component structure
+export default function LayoutWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const lastPathname = useRef<string>("");
   const scrollableMainRef = useRef<HTMLDivElement>(null);
@@ -19,10 +24,10 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       if (scrollableMainRef.current) {
         scrollableMainRef.current.scrollTop = 0;
       }
-      
+
       // Always reset window scroll as well
       window.scrollTo(0, 0);
-      
+
       lastPathname.current = pathname;
     }
   }, [pathname]);
@@ -51,11 +56,15 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   }
 
   // Home page uses HomeNavbar
-  if (pathname === "/home" || pathname === "/user_dashboard") {
+  if (
+    pathname === "/home" ||
+    pathname === "/user_dashboard" ||
+    pathname === "/"
+  ) {
     return (
-      <div className="flex flex-col h-screen" key={pathname}>
+      <div className="flex flex-col " key={pathname}>
         <HomeNavbar />
-        <main 
+        <main
           ref={scrollableMainRef}
           className="flex-1 h-screen lg:overflow-hidden sm:overflow-y-auto"
           // This ensures scroll is always reset when navigating
@@ -85,10 +94,10 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     return (
       <div className="flex flex-col h-screen" key={pathname}>
         {/* Navbar stays at the top */}
-        <HomeNavbar /> 
-        
+        <HomeNavbar />
+
         {/* main fills the rest of the space and handles scrolling */}
-        <main 
+        <main
           ref={scrollableMainRef}
           className="flex-1 overflow-y-auto"
           onLoad={() => {
@@ -103,12 +112,8 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     );
   }
 
-  // Default navbar/footer
   return (
-    <div key={pathname} className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1">{children}</main>
-      <Footer />
-    </div>
+    // Your layout JSX here
+    <>{children}</>
   );
 }

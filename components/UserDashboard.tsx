@@ -3,7 +3,17 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { auth, rtdb } from "@/firebase/clientApp";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { ref, onValue, query, orderByChild, equalTo, get, DataSnapshot, remove, set } from "firebase/database";
+import {
+  ref,
+  onValue,
+  query,
+  orderByChild,
+  equalTo,
+  get,
+  DataSnapshot,
+  remove,
+  set,
+} from "firebase/database";
 import {
   Bell,
   Users,
@@ -50,7 +60,7 @@ import {
   Database,
   Wifi,
   WifiOff,
-  ArrowLeft
+  ArrowLeft,
 } from "lucide-react";
 import { DraftManager } from "@/lib/draftManager";
 import JobDetail from "@/components/JobDetail";
@@ -144,7 +154,10 @@ const SkeletonHeader: React.FC = () => {
           {/* Navigation Skeleton */}
           <div className="space-y-2">
             {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="w-full h-12 bg-slate-200 rounded-xl"></div>
+              <div
+                key={i}
+                className="w-full h-12 bg-slate-200 rounded-xl"
+              ></div>
             ))}
           </div>
         </div>
@@ -167,7 +180,10 @@ const SkeletonHeader: React.FC = () => {
         {/* Stats Cards Skeleton */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="bg-white p-5 rounded-2xl border border-slate-200">
+            <div
+              key={i}
+              className="bg-white p-5 rounded-2xl border border-slate-200"
+            >
               <div className="flex justify-between items-start mb-4">
                 <div className="space-y-2">
                   <div className="w-24 h-4 bg-slate-200 rounded"></div>
@@ -183,7 +199,10 @@ const SkeletonHeader: React.FC = () => {
         {/* Job Posts Grid Skeleton */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {[1, 2].map((i) => (
-            <div key={i} className="bg-white rounded-2xl border border-slate-200 p-6">
+            <div
+              key={i}
+              className="bg-white rounded-2xl border border-slate-200 p-6"
+            >
               <div className="space-y-4">
                 <div className="flex justify-between items-start">
                   <div className="space-y-2 flex-1">
@@ -250,7 +269,9 @@ const SkeletonJobCard: React.FC = () => {
 const UserDashboard = () => {
   const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [status, setStatus] = useState<"loading" | "authenticated" | "unauthenticated">("loading");
+  const [status, setStatus] = useState<
+    "loading" | "authenticated" | "unauthenticated"
+  >("loading");
   const [myJobs, setMyJobs] = useState<JobPost[]>([]);
   const [localDrafts, setLocalDrafts] = useState<JobPost[]>([]);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
@@ -261,7 +282,7 @@ const UserDashboard = () => {
     totalViews: 0,
     totalApplications: 0,
     avgMatchRate: 0,
-    profileViews: 0
+    profileViews: 0,
   });
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -282,12 +303,12 @@ const UserDashboard = () => {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
@@ -319,7 +340,11 @@ const UserDashboard = () => {
         const data = snapshot.val();
         const profile: UserProfile = {
           uid: userId,
-          displayName: data.displayName || data.username || data.email?.split("@")[0] || "User",
+          displayName:
+            data.displayName ||
+            data.username ||
+            data.email?.split("@")[0] ||
+            "User",
           email: data.email || "",
           phoneNumber: data.phoneNumber || data.phone || "Not provided",
           photoURL: data.photoURL || data.profileImage || "",
@@ -327,10 +352,12 @@ const UserDashboard = () => {
           profession: data.profession || data.businessName || "Employer",
           bio: data.bio || "No bio yet",
           location: data.location || data.province || "Not specified",
-          memberSince: data.createdAt ? new Date(data.createdAt).toLocaleDateString() : "Recently",
+          memberSince: data.createdAt
+            ? new Date(data.createdAt).toLocaleDateString()
+            : "Recently",
           totalPosts: data.totalPosts || 0,
           profileViews: data.profileViews || 0,
-          rating: data.rating || 0
+          rating: data.rating || 0,
         };
         setUserProfile(profile);
       }
@@ -343,60 +370,70 @@ const UserDashboard = () => {
   const fetchUserJobs = (userId: string) => {
     setLoadingJobs(true);
     const jobsRef = ref(rtdb, "posts");
-    const jobsQuery = query(jobsRef, orderByChild("employerId"), equalTo(userId));
+    const jobsQuery = query(
+      jobsRef,
+      orderByChild("employerId"),
+      equalTo(userId),
+    );
 
-    const unsubscribeJobs = onValue(jobsQuery, (snapshot: DataSnapshot) => {
-      const data = snapshot.val();
-      const jobsList: JobPost[] = [];
+    const unsubscribeJobs = onValue(
+      jobsQuery,
+      (snapshot: DataSnapshot) => {
+        const data = snapshot.val();
+        const jobsList: JobPost[] = [];
 
-      if (data) {
-        Object.entries(data).forEach(([id, value]: [string, any]) => {
-          if (value.isDraft) return;
+        if (data) {
+          Object.entries(data).forEach(([id, value]: [string, any]) => {
+            if (value.isDraft) return;
 
-          const job: JobPost = {
-            id,
-            title: value.title || "Untitled Position",
-            description: value.jobDescription || value.description || "",
-            location: value.province || value.location || "Cambodia",
-            province: value.province,
-            salary: value.salary || "Negotiable",
-            salaryRange: value.salaryRange || "",
-            experience: value.experience || "Not specified",
-            jobType: value.workplaceType || "Full-time",
-            workplaceType: value.workplaceType,
-            postDate: value.timestamp ? new Date(value.timestamp).toLocaleDateString() : "Recently",
-            timestamp: value.timestamp || Date.now(),
-            views: value.views || 0,
-            applications: value.applications || 0,
-            status: value.status || "active",
-            category: value.category,
-            businessName: value.businessName || "Company",
-            businessType: value.businessType,
-            images: value.images || [],
-            benefits: value.benefits || [],
-            otherRequirements: value.otherRequirements,
-            daysPerWeek: value.daysPerWeek,
-            startTime: value.startTime,
-            endTime: value.endTime,
-            latitude: value.latitude,
-            longitude: value.longitude,
-            locationDescription: value.locationDescription,
-            isDraft: false,
-            employerId: value.employerId || userId
-          };
-          jobsList.push(job);
-        });
+            const job: JobPost = {
+              id,
+              title: value.title || "Untitled Position",
+              description: value.jobDescription || value.description || "",
+              location: value.province || value.location || "Cambodia",
+              province: value.province,
+              salary: value.salary || "Negotiable",
+              salaryRange: value.salaryRange || "",
+              experience: value.experience || "Not specified",
+              jobType: value.workplaceType || "Full-time",
+              workplaceType: value.workplaceType,
+              postDate: value.timestamp
+                ? new Date(value.timestamp).toLocaleDateString()
+                : "Recently",
+              timestamp: value.timestamp || Date.now(),
+              views: value.views || 0,
+              applications: value.applications || 0,
+              status: value.status || "active",
+              category: value.category,
+              businessName: value.businessName || "Company",
+              businessType: value.businessType,
+              images: value.images || [],
+              benefits: value.benefits || [],
+              otherRequirements: value.otherRequirements,
+              daysPerWeek: value.daysPerWeek,
+              startTime: value.startTime,
+              endTime: value.endTime,
+              latitude: value.latitude,
+              longitude: value.longitude,
+              locationDescription: value.locationDescription,
+              isDraft: false,
+              employerId: value.employerId || userId,
+            };
+            jobsList.push(job);
+          });
 
-        const sortedJobs = jobsList.sort((a, b) => b.timestamp - a.timestamp);
-        setMyJobs(sortedJobs);
-      } else {
-        setMyJobs([]);
-      }
-      setLoadingJobs(false);
-    }, (error) => {
-      console.error("Error fetching jobs:", error);
-      setLoadingJobs(false);
-    });
+          const sortedJobs = jobsList.sort((a, b) => b.timestamp - a.timestamp);
+          setMyJobs(sortedJobs);
+        } else {
+          setMyJobs([]);
+        }
+        setLoadingJobs(false);
+      },
+      (error) => {
+        console.error("Error fetching jobs:", error);
+        setLoadingJobs(false);
+      },
+    );
 
     return unsubscribeJobs;
   };
@@ -406,7 +443,7 @@ const UserDashboard = () => {
     setLoadingDrafts(true);
     try {
       const drafts = await DraftManager.getAllDrafts();
-      const localDraftsList: JobPost[] = drafts.map(draft => ({
+      const localDraftsList: JobPost[] = drafts.map((draft) => ({
         id: draft.id,
         title: draft.data.title || "Untitled Draft",
         description: draft.data.jobDescription || "",
@@ -417,7 +454,9 @@ const UserDashboard = () => {
         experience: draft.data.experience || "Not specified",
         jobType: draft.data.workplaceType || "Full-time",
         workplaceType: draft.data.workplaceType,
-        postDate: draft.createdAt ? new Date(draft.createdAt).toLocaleDateString() : "Recently",
+        postDate: draft.createdAt
+          ? new Date(draft.createdAt).toLocaleDateString()
+          : "Recently",
         timestamp: draft.createdAt || Date.now(),
         views: 0,
         applications: 0,
@@ -436,7 +475,7 @@ const UserDashboard = () => {
         locationDescription: draft.data.locationDescription,
         isDraft: true,
         isLocal: true,
-        employerId: currentUser?.uid || ""
+        employerId: currentUser?.uid || "",
       }));
 
       setLocalDrafts(localDraftsList);
@@ -452,12 +491,20 @@ const UserDashboard = () => {
     if (!loadingJobs && !loadingDrafts) {
       const stats: DashboardStats = {
         totalJobs: myJobs.length,
-        activeJobs: myJobs.filter(job => job.status === "active").length,
+        activeJobs: myJobs.filter((job) => job.status === "active").length,
         totalDrafts: localDrafts.length,
         totalViews: myJobs.reduce((sum, job) => sum + (job.views || 0), 0),
-        totalApplications: myJobs.reduce((sum, job) => sum + (job.applications || 0), 0),
-        avgMatchRate: myJobs.length > 0 ? Math.round(myJobs.reduce((sum, job) => sum + 85, 0) / myJobs.length) : 0,
-        profileViews: userProfile?.profileViews || 0
+        totalApplications: myJobs.reduce(
+          (sum, job) => sum + (job.applications || 0),
+          0,
+        ),
+        avgMatchRate:
+          myJobs.length > 0
+            ? Math.round(
+                myJobs.reduce((sum, job) => sum + 85, 0) / myJobs.length,
+              )
+            : 0,
+        profileViews: userProfile?.profileViews || 0,
       };
       setDashboardStats(stats);
     }
@@ -511,7 +558,7 @@ const UserDashboard = () => {
             daysPerWeek: draft.data.daysPerWeek,
             startTime: draft.data.startTime,
             endTime: draft.data.endTime,
-            isDraft: true
+            isDraft: true,
           };
 
           setSelectedJob(job);
@@ -561,7 +608,7 @@ const UserDashboard = () => {
             timestamp: postData.timestamp,
             views: postData.views || 0,
             employerId: postData.employerId || postData.authorId,
-            isDraft: false
+            isDraft: false,
           };
 
           setSelectedJob(job);
@@ -598,18 +645,26 @@ const UserDashboard = () => {
         return;
       }
 
-      const { getStorage, ref: storageRef, uploadBytes, getDownloadURL } = await import("firebase/storage");
+      const {
+        getStorage,
+        ref: storageRef,
+        uploadBytes,
+        getDownloadURL,
+      } = await import("firebase/storage");
       const storage = getStorage();
 
       const uploadedUrls = await Promise.all(
         localDraft.images.map(async (base64Image: string, index: number) => {
           const response = await fetch(base64Image);
           const blob = await response.blob();
-          const fileExtension = 'jpg';
-          const storageReference = storageRef(storage, `posts/${currentUser.uid}/${draft.id}_${index}.${fileExtension}`);
+          const fileExtension = "jpg";
+          const storageReference = storageRef(
+            storage,
+            `posts/${currentUser.uid}/${draft.id}_${index}.${fileExtension}`,
+          );
           const snapshot = await uploadBytes(storageReference, blob);
           return await getDownloadURL(snapshot.ref);
-        })
+        }),
       );
 
       const newPostRef = ref(rtdb, `posts/${draft.id}`);
@@ -618,7 +673,8 @@ const UserDashboard = () => {
         id: draft.id,
         postId: draft.id,
         employerId: currentUser.uid,
-        authorName: userProfile?.username || currentUser?.displayName || "Employer",
+        authorName:
+          userProfile?.username || currentUser?.displayName || "Employer",
         authorPhoto: userProfile?.photoURL || "",
         images: uploadedUrls,
         status: "active",
@@ -637,7 +693,7 @@ const UserDashboard = () => {
         await set(userRef, {
           ...userProfile,
           totalPosts: currentTotal + 1,
-          updatedAt: Date.now()
+          updatedAt: Date.now(),
         });
       }
 
@@ -649,7 +705,6 @@ const UserDashboard = () => {
       if (selectedJob?.id === draft.id) {
         handleCloseDetail();
       }
-
     } catch (error) {
       console.error("Error publishing draft:", error);
       alert("Failed to publish draft. Please try again.");
@@ -657,12 +712,17 @@ const UserDashboard = () => {
   };
 
   const handleDeleteJob = async (job: JobPost) => {
-    if (!confirm(`Are you sure you want to delete this ${job.isDraft ? 'draft' : 'job post'}?`)) return;
+    if (
+      !confirm(
+        `Are you sure you want to delete this ${job.isDraft ? "draft" : "job post"}?`,
+      )
+    )
+      return;
 
     try {
       if (job.isDraft) {
         await DraftManager.deleteDraft(job.id);
-        setLocalDrafts(prev => prev.filter(d => d.id !== job.id));
+        setLocalDrafts((prev) => prev.filter((d) => d.id !== job.id));
       } else {
         await remove(ref(rtdb, `posts/${job.id}`));
 
@@ -672,18 +732,17 @@ const UserDashboard = () => {
           await set(userRef, {
             ...userProfile,
             totalPosts: currentTotal > 0 ? currentTotal - 1 : 0,
-            updatedAt: Date.now()
+            updatedAt: Date.now(),
           });
         }
 
-        setMyJobs(prev => prev.filter(j => j.id !== job.id));
+        setMyJobs((prev) => prev.filter((j) => j.id !== job.id));
       }
 
       // Close detail view if open
       if (selectedJob?.id === job.id) {
         handleCloseDetail();
       }
-
     } catch (error) {
       console.error("Error deleting:", error);
       alert("Failed to delete. Please try again.");
@@ -692,7 +751,9 @@ const UserDashboard = () => {
 
   // Combine all posts for display
   const allPosts = useMemo(() => {
-    return [...myJobs, ...localDrafts].sort((a, b) => b.timestamp - a.timestamp);
+    return [...myJobs, ...localDrafts].sort(
+      (a, b) => b.timestamp - a.timestamp,
+    );
   }, [myJobs, localDrafts]);
 
   const filteredPosts = useMemo(() => {
@@ -700,19 +761,22 @@ const UserDashboard = () => {
 
     if (selectedFilter !== "all") {
       if (selectedFilter === "draft") {
-        filtered = filtered.filter(post => post.isDraft);
+        filtered = filtered.filter((post) => post.isDraft);
       } else {
-        filtered = filtered.filter(post => !post.isDraft && post.status === selectedFilter);
+        filtered = filtered.filter(
+          (post) => !post.isDraft && post.status === selectedFilter,
+        );
       }
     }
 
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(post =>
-        post.title.toLowerCase().includes(query) ||
-        post.description.toLowerCase().includes(query) ||
-        post.businessName.toLowerCase().includes(query) ||
-        post.location.toLowerCase().includes(query)
+      filtered = filtered.filter(
+        (post) =>
+          post.title.toLowerCase().includes(query) ||
+          post.description.toLowerCase().includes(query) ||
+          post.businessName.toLowerCase().includes(query) ||
+          post.location.toLowerCase().includes(query),
       );
     }
 
@@ -722,18 +786,24 @@ const UserDashboard = () => {
   const getStatusColor = (status: string, isDraft?: boolean) => {
     if (isDraft) return "bg-amber-500";
     switch (status) {
-      case "active": return "bg-emerald-500";
-      case "closed": return "bg-rose-500";
-      default: return "bg-slate-500";
+      case "active":
+        return "bg-emerald-500";
+      case "closed":
+        return "bg-rose-500";
+      default:
+        return "bg-slate-500";
     }
   };
 
   const getStatusText = (job: JobPost) => {
     if (job.isDraft) return "Local Draft";
     switch (job.status) {
-      case "active": return "Active";
-      case "closed": return "Closed";
-      default: return "Unknown";
+      case "active":
+        return "Active";
+      case "closed":
+        return "Closed";
+      default:
+        return "Unknown";
     }
   };
 
@@ -851,10 +921,14 @@ const UserDashboard = () => {
       <div className="h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-indigo-50/20">
         <div className="text-center">
           <AlertCircle className="text-rose-500 mx-auto mb-4" size={48} />
-          <h3 className="text-xl font-bold text-slate-800 mb-2">Authentication Required</h3>
-          <p className="text-slate-600 mb-6">Please log in to access your dashboard.</p>
+          <h3 className="text-xl font-bold text-slate-800 mb-2">
+            Authentication Required
+          </h3>
+          <p className="text-slate-600 mb-6">
+            Please log in to access your dashboard.
+          </p>
           <button
-            onClick={() => window.location.href = "/auth?form=login"}
+            onClick={() => (window.location.href = "/auth?form=login")}
             className="px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition-colors"
           >
             Go to Login
@@ -891,17 +965,20 @@ const UserDashboard = () => {
       </div>
 
       {/* Sidebar - Fixed with overflow-y-auto */}
-      <aside className={`
+      <aside
+        className={`
         fixed inset-y-0 left-0 z-50 w-[320px] h-screen overflow-clip bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 transform shadow-2xl
         lg:relative lg:translate-x-0 lg:w-[320px] lg:shadow-none lg:z-0 lg:flex lg:flex-col
         ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0 lg:static
-      `}>
-        <div className="flex flex-col h-screen px-6 py-8 gap-5 overflow-y-hidden justify-center align-center my-auto">
+      `}
+      >
+        <div className="flex flex-col px-6 py-8 gap-5 overflow-y-hidden justify-center align-center my-auto">
           {/* Profile Section */}
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
               {userProfile?.photoURL ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={userProfile.photoURL}
                   alt="Profile"
@@ -918,8 +995,12 @@ const UserDashboard = () => {
             </div>
 
             <div className="text-center">
-              <h2 className="font-bold text-xl text-slate-900">{userProfile?.displayName}</h2>
-              <p className="text-sm text-slate-500 mt-1">{userProfile?.profession}</p>
+              <h2 className="font-bold text-xl text-slate-900">
+                {userProfile?.displayName}
+              </h2>
+              <p className="text-sm text-slate-500 mt-1">
+                {userProfile?.profession}
+              </p>
               <div className="flex items-center justify-center gap-2 mt-2 text-sm text-slate-400">
                 <MapPin size={14} />
                 <span>{userProfile?.location}</span>
@@ -937,7 +1018,11 @@ const UserDashboard = () => {
             <SidebarLink
               icon={<Briefcase size={20} className="text-indigo-600" />}
               label="My Jobs"
-              active={selectedFilter === "all" || selectedFilter === "active" || selectedFilter === "closed"}
+              active={
+                selectedFilter === "all" ||
+                selectedFilter === "active" ||
+                selectedFilter === "closed"
+              }
               count={dashboardStats.totalJobs}
               onClick={() => {
                 setSelectedFilter("all");
@@ -971,7 +1056,10 @@ const UserDashboard = () => {
               onClick={handleSignOut}
               className="flex items-center gap-3 w-full px-4 py-3 text-slate-500 hover:text-red-500 hover:bg-red-50 rounded-xl transition-colors font-medium group"
             >
-              <LogOut size={18} className="group-hover:-translate-x-1 transition-transform" />
+              <LogOut
+                size={18}
+                className="group-hover:-translate-x-1 transition-transform"
+              />
               <span>Sign Out</span>
             </button>
           </div>
@@ -983,8 +1071,12 @@ const UserDashboard = () => {
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl lg:text-3xl font-black text-slate-900">Dashboard</h1>
-            <p className="text-slate-500 mt-1">Manage your job posts and track performance</p>
+            <h1 className="text-2xl lg:text-3xl font-black text-slate-900">
+              Dashboard
+            </h1>
+            <p className="text-slate-500 mt-1">
+              Manage your job posts and track performance
+            </p>
           </div>
 
           <div className="flex items-center gap-4">
@@ -1052,7 +1144,8 @@ const UserDashboard = () => {
               <div>
                 <h4 className="font-bold text-amber-800">You're Offline</h4>
                 <p className="text-sm text-amber-600">
-                  You can view and edit local drafts, but need to be online to publish new jobs.
+                  You can view and edit local drafts, but need to be online to
+                  publish new jobs.
                 </p>
               </div>
             </div>
@@ -1069,18 +1162,24 @@ const UserDashboard = () => {
             <button
               key={filter}
               onClick={() => setSelectedFilter(filter)}
-              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${selectedFilter === filter
-                ? "bg-slate-900 text-white shadow-sm"
-                : "bg-white text-slate-500 border border-slate-200 hover:border-slate-300"
-                }`}
+              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+                selectedFilter === filter
+                  ? "bg-slate-900 text-white shadow-sm"
+                  : "bg-white text-slate-500 border border-slate-200 hover:border-slate-300"
+              }`}
             >
-              {filter === "all" ? "All Posts" :
-                filter === "draft" ? "Local Drafts" :
-                  `${filter.charAt(0).toUpperCase() + filter.slice(1)} Jobs`}
+              {filter === "all"
+                ? "All Posts"
+                : filter === "draft"
+                  ? "Local Drafts"
+                  : `${filter.charAt(0).toUpperCase() + filter.slice(1)} Jobs`}
             </button>
           ))}
           <div className="ml-auto flex items-center gap-2 text-sm text-slate-500">
-            <span className="font-bold text-slate-900">{filteredPosts.length}</span> {selectedFilter === "draft" ? "drafts" : "posts"} found
+            <span className="font-bold text-slate-900">
+              {filteredPosts.length}
+            </span>{" "}
+            {selectedFilter === "draft" ? "drafts" : "posts"} found
           </div>
         </div>
 
@@ -1108,10 +1207,14 @@ const UserDashboard = () => {
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className={`${getStatusColor(post.status, post.isDraft)} text-white text-xs font-bold px-3 py-1 rounded-full`}>
+                          <span
+                            className={`${getStatusColor(post.status, post.isDraft)} text-white text-xs font-bold px-3 py-1 rounded-full`}
+                          >
                             {getStatusText(post)}
                           </span>
-                          <span className="text-xs text-slate-500">{post.postDate}</span>
+                          <span className="text-xs text-slate-500">
+                            {post.postDate}
+                          </span>
                           {post.isDraft && (
                             <span className="text-xs text-amber-600 font-medium flex items-center gap-1">
                               <Database size={12} />
@@ -1123,7 +1226,9 @@ const UserDashboard = () => {
                           {post.title}
                         </h3>
                         <div className="flex items-center gap-3 text-sm text-slate-500">
-                          <span className="font-semibold">{post.businessName}</span>
+                          <span className="font-semibold">
+                            {post.businessName}
+                          </span>
                           <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
                           <span className="flex items-center gap-1">
                             <MapPin size={14} />
@@ -1162,12 +1267,18 @@ const UserDashboard = () => {
                     {!post.isDraft && (
                       <div className="grid grid-cols-2 gap-4 mb-4">
                         <div className="text-center">
-                          <div className="text-2xl font-black text-slate-900">{post.views || 0}</div>
+                          <div className="text-2xl font-black text-slate-900">
+                            {post.views || 0}
+                          </div>
                           <div className="text-xs text-slate-500">Views</div>
                         </div>
                         <div className="text-center">
-                          <div className="text-2xl font-black text-slate-900">{post.applications || 0}</div>
-                          <div className="text-xs text-slate-500">Applications</div>
+                          <div className="text-2xl font-black text-slate-900">
+                            {post.applications || 0}
+                          </div>
+                          <div className="text-xs text-slate-500">
+                            Applications
+                          </div>
                         </div>
                       </div>
                     )}
@@ -1179,7 +1290,9 @@ const UserDashboard = () => {
                       </div>
                       <div className="flex items-center gap-2 text-sm text-slate-600">
                         <DollarSign size={14} />
-                        <span className="font-bold">{post.salary || "Negotiable"}</span>
+                        <span className="font-bold">
+                          {post.salary || "Negotiable"}
+                        </span>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-slate-600">
                         <Clock size={14} />
@@ -1244,7 +1357,9 @@ const UserDashboard = () => {
                   <Briefcase size={40} />
                 </div>
                 <h3 className="text-xl font-bold text-slate-800 mb-2">
-                  {selectedFilter === "draft" ? "No drafts found" : "No job posts found"}
+                  {selectedFilter === "draft"
+                    ? "No drafts found"
+                    : "No job posts found"}
                 </h3>
                 <p className="text-slate-500 text-center max-w-md mb-6">
                   {searchQuery
@@ -1258,7 +1373,9 @@ const UserDashboard = () => {
                   className="px-6 py-3 bg-linear-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-indigo-200 transition-all flex items-center gap-2"
                 >
                   <PlusCircle size={18} />
-                  {selectedFilter === "draft" ? "Create New Draft" : "Create Your First Job"}
+                  {selectedFilter === "draft"
+                    ? "Create New Draft"
+                    : "Create Your First Job"}
                 </button>
               </div>
             )}
@@ -1289,9 +1406,10 @@ const SidebarLink: React.FC<{
     onClick={onClick}
     className={`
       flex items-center justify-between w-full px-4 py-3 rounded-xl transition-all
-      ${active
-        ? "bg-linear-to-r from-indigo-50 to-blue-50 border border-indigo-100 text-indigo-600 font-bold"
-        : "text-slate-500 hover:bg-slate-50"
+      ${
+        active
+          ? "bg-linear-to-r from-indigo-50 to-blue-50 border border-indigo-100 text-indigo-600 font-bold"
+          : "text-slate-500 hover:bg-slate-50"
       }
     `}
   >
@@ -1300,7 +1418,9 @@ const SidebarLink: React.FC<{
       <span>{label}</span>
     </div>
     {count !== undefined && (
-      <span className={`px-2 py-1 rounded-full text-xs font-bold ${active ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-600'}`}>
+      <span
+        className={`px-2 py-1 rounded-full text-xs font-bold ${active ? "bg-indigo-600 text-white" : "bg-slate-200 text-slate-600"}`}
+      >
         {count}
       </span>
     )}

@@ -19,7 +19,7 @@ import {
 
 const HowItWorks = () => {
   const [activeTab, setActiveTab] = useState<"job-seekers" | "employers">(
-    "job-seekers"
+    "job-seekers",
   );
 
   const jobSeekerSteps = [
@@ -73,12 +73,7 @@ const HowItWorks = () => {
       icon: <MessageSquare className="w-8 h-8" />,
       title: "Connect & Interview",
       description: "Chat directly with employers and schedule interviews.",
-      details: [
-        "In-app messaging",
-        "Video call scheduling",
-        "Interview preparation",
-        "Real-time notifications",
-      ],
+      details: ["In-app messaging", "Real-time notifications"],
       color: "from-orange-500 to-red-500",
       bgColor: "bg-orange-50",
     },

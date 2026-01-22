@@ -1,13 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState } from "react";
 import { Eye, EyeOff, Chrome, Github, Loader2 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { auth } from "@/firebase/clientApp";
-import { 
-  signInWithEmailAndPassword, 
-  signInWithPopup, 
-  GoogleAuthProvider, 
-  GithubAuthProvider 
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  GithubAuthProvider,
 } from "firebase/auth";
 
 type LoginFormProps = {
@@ -27,12 +30,15 @@ export default function LoginForm({ onSwitch, onSuccess }: LoginFormProps) {
     setLoading(true);
     setError("");
     const provider =
-      providerType === "google" ? new GoogleAuthProvider() : new GithubAuthProvider();
+      providerType === "google"
+        ? new GoogleAuthProvider()
+        : new GithubAuthProvider();
 
     try {
       const result = await signInWithPopup(auth, provider);
       // Trigger status check in parent instead of immediate redirect
       onSuccess?.(result.user.uid);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError("Social login failed. Please try again.");
     } finally {
@@ -50,6 +56,7 @@ export default function LoginForm({ onSwitch, onSuccess }: LoginFormProps) {
       const result = await signInWithEmailAndPassword(auth, email, password);
       // Trigger status check in parent instead of immediate redirect
       onSuccess?.(result.user.uid);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError("Invalid email or password.");
     } finally {
@@ -58,22 +65,49 @@ export default function LoginForm({ onSwitch, onSuccess }: LoginFormProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden font-sans">
+    <div className="fixed inset-0 z-9999 bg-black flex items-center justify-center overflow-hidden font-sans">
       <div className="w-full h-full grid grid-cols-1 lg:grid-cols-2">
         {/* LEFT INFO PANEL */}
-        <div className="relative bg-gradient-to-b from-[#4640DE] to-[#1e1b4b] p-6 sm:p-10 lg:p-20 flex flex-col justify-center overflow-hidden">
+        <div className="relative bg-linear-to-b from-[#4640DE] to-[#1e1b4b] p-6 sm:p-10 lg:p-20 flex flex-col justify-center overflow-hidden">
           <div className="absolute top-0 left-0 text-white/5 text-[10rem] sm:text-[15rem] font-bold leading-none -translate-x-12 -translate-y-12 select-none">
             JobLink
           </div>
           <div className="relative z-10 max-w-md mx-auto">
-            <span className="text-white font-black text-2xl sm:text-3xl tracking-tighter italic mb-8 sm:mb-10 block">JobLink</span>
-            <h1 className="text-3xl sm:text-5xl font-bold text-white mb-3 sm:mb-4">Build your career</h1>
-            <p className="text-white/80 text-base sm:text-lg mb-10 sm:mb-16">Sign in to discover jobs, track applications, and grow professionally.</p>
+            {/* Logo */}
+            <Link href="/" className="flex items-center shrink-0 z-10">
+              <Image
+                src="/Images/logo_white.png"
+                alt="JobLink Logo"
+                width={60}
+                height={60}
+                className="h-20 w-auto"
+                priority
+              />
+            </Link>
+            <h1 className="text-3xl sm:text-5xl font-bold text-white mb-3 sm:mb-4">
+              Build your career
+            </h1>
+            <p className="text-white/80 text-base sm:text-lg mb-10 sm:mb-16">
+              Sign in to discover jobs, track applications, and grow
+              professionally.
+            </p>
             <div className="relative space-y-8 sm:space-y-12">
-              <div className="absolute left-[13px] top-2 bottom-2 w-px bg-white/20"></div>
-              <StepItem emoji="👤" title="Sign in to JobLink" desc="Access your personalized job dashboard." />
-              <StepItem emoji="📄" title="Apply with confidence" desc="Send applications using your saved profile." />
-              <StepItem emoji="🚀" title="Advance your career" desc="Get hired and grow with new opportunities." />
+              <div className="absolute left-3.25 top-2 bottom-2 w-px bg-white/20"></div>
+              <StepItem
+                emoji="👤"
+                title="Sign in to JobLink"
+                desc="Access your personalized job dashboard."
+              />
+              <StepItem
+                emoji="📄"
+                title="Apply with confidence"
+                desc="Send applications using your saved profile."
+              />
+              <StepItem
+                emoji="🚀"
+                title="Advance your career"
+                desc="Get hired and grow with new opportunities."
+              />
             </div>
           </div>
         </div>
@@ -82,23 +116,27 @@ export default function LoginForm({ onSwitch, onSuccess }: LoginFormProps) {
         <div className="bg-white p-6 sm:p-10 lg:p-20 flex flex-col justify-center items-center">
           <div className="w-full max-w-md">
             <div className="text-center mb-8 sm:mb-10">
-              <h2 className="text-2xl sm:text-4xl font-bold text-black mb-2 sm:mb-3">Sign in to JobLink</h2>
-              <p className="text-gray-500 text-xs sm:text-sm">Enter your credentials to continue.</p>
+              <h2 className="text-2xl sm:text-4xl font-bold text-black mb-2 sm:mb-3">
+                Sign in to JobLink
+              </h2>
+              <p className="text-gray-500 text-xs sm:text-sm">
+                Enter your credentials to continue.
+              </p>
             </div>
 
             {/* Social Login */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
-              <button 
+              <button
                 type="button"
-                onClick={() => handleSocialLogin("google")} 
+                onClick={() => handleSocialLogin("google")}
                 className="flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-800 bg-[#EEF2FF] text-black hover:bg-[#4640DE] hover:text-white transition-all"
               >
                 <Chrome size={18} />
                 <span className="text-xs font-medium">Google</span>
               </button>
-              <button 
+              <button
                 type="button"
-                onClick={() => handleSocialLogin("github")} 
+                onClick={() => handleSocialLogin("github")}
                 className="flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-800 bg-[#EEF2FF] text-black hover:bg-[#4640DE] hover:text-white transition-all"
               >
                 <Github size={18} />
@@ -108,15 +146,26 @@ export default function LoginForm({ onSwitch, onSuccess }: LoginFormProps) {
 
             <div className="relative flex items-center mb-8 sm:mb-10">
               <div className="grow border-t border-gray-800"></div>
-              <span className="px-3 sm:px-4 text-gray-600 text-[10px] uppercase font-bold tracking-widest">Or</span>
+              <span className="px-3 sm:px-4 text-gray-600 text-[10px] uppercase font-bold tracking-widest">
+                Or
+              </span>
               <div className="grow border-t border-gray-800"></div>
             </div>
 
-            {error && <p className="text-red-500 text-xs mb-4 text-center font-medium bg-red-50 py-2 rounded-lg">{error}</p>}
+            {error && (
+              <p className="text-red-500 text-xs mb-4 text-center font-medium bg-red-50 py-2 rounded-lg">
+                {error}
+              </p>
+            )}
 
-            <form onSubmit={handleEmailLogin} className="space-y-5 sm:space-y-6">
+            <form
+              onSubmit={handleEmailLogin}
+              className="space-y-5 sm:space-y-6"
+            >
               <div>
-                <label className="block text-xs sm:text-sm text-gray-400 mb-1.5 sm:mb-2">Email Address</label>
+                <label className="block text-xs sm:text-sm text-gray-400 mb-1.5 sm:mb-2">
+                  Email Address
+                </label>
                 <input
                   type="email"
                   required
@@ -128,7 +177,9 @@ export default function LoginForm({ onSwitch, onSuccess }: LoginFormProps) {
               </div>
 
               <div>
-                <label className="block text-xs sm:text-sm text-gray-400 mb-1.5 sm:mb-2">Password</label>
+                <label className="block text-xs sm:text-sm text-gray-400 mb-1.5 sm:mb-2">
+                  Password
+                </label>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -138,19 +189,33 @@ export default function LoginForm({ onSwitch, onSuccess }: LoginFormProps) {
                     placeholder="••••••••"
                     className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl bg-[#EEF2FF] text-black border border-gray-800 focus:outline-none focus:border-[#4640DE] transition-all"
                   />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600">
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600"
+                  >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
               </div>
 
-              <button disabled={loading} className="w-full py-3.5 sm:py-4 bg-gradient-to-r from-[#4640DE] to-[#3730a3] text-white font-bold text-base sm:text-lg rounded-xl hover:shadow-[0_0_20px_rgba(70,64,222,0.4)] transition-all flex items-center justify-center">
+              <button
+                disabled={loading}
+                className="w-full py-3.5 sm:py-4 bg-linear-to-r from-[#4640DE] to-[#3730a3] text-white font-bold text-base sm:text-lg rounded-xl hover:shadow-[0_0_20px_rgba(70,64,222,0.4)] transition-all flex items-center justify-center"
+              >
                 {loading ? <Loader2 className="animate-spin" /> : "Sign in"}
               </button>
             </form>
 
             <p className="mt-6 sm:mt-8 text-center text-gray-500 text-xs sm:text-sm">
-              New to JobLink? <button type="button" className="text-[#4640DE] font-bold hover:underline ml-1" onClick={() => onSwitch?.()}>Sign up</button>
+              New to JobLink?{" "}
+              <button
+                type="button"
+                className="text-[#4640DE] font-bold hover:underline ml-1"
+                onClick={() => onSwitch?.()}
+              >
+                Sign up
+              </button>
             </p>
           </div>
         </div>
@@ -159,7 +224,15 @@ export default function LoginForm({ onSwitch, onSuccess }: LoginFormProps) {
   );
 }
 
-function StepItem({ emoji, title, desc }: { emoji: string; title: string; desc: string }) {
+function StepItem({
+  emoji,
+  title,
+  desc,
+}: {
+  emoji: string;
+  title: string;
+  desc: string;
+}) {
   return (
     <div className="group flex items-start gap-4 sm:gap-6 relative">
       <div className="z-10 shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-white/30 bg-[#1e1b4b] flex items-center justify-center mt-1 group-hover:border-white">
